@@ -894,9 +894,9 @@ tags:
     description: asdasdasd
   - name: Insight
     description: asdasdasd
-  - name: Security Events
+  - name: Security Event
     description: Security events represent all of the alarm states of the Buy Buddy devices. Such as alarmed, missing, active, ect.
-  - name: Interaction
+  - name: Interaction Event
     description: asdasdasd
   - name: Stock
     description: asdasdasd
