@@ -2,9 +2,53 @@ openapi: 3.0.0
 servers:
   - url: 'https://api-legacy.buybuddy.co/api/v1'
 info:
-  description: Buy Buddy Developer's API
-  
-  ## Manage Client-Side Customization Module
+  description: |
+    This is the Buy Buddy API.
+    # Introduction
+    ## What is Buy Buddy Platform?
+    Buy Buddy is a multi-purpose retail efficiency platform.
+    By using the payment device for retailers that are attached to the items in their shops we allow customers to directly pay through their mobile phones and check out of the store.
+    
+    Hitags are also capable of collecting customer behavior, employee performance, product efficiency, inventory data for retailers and present them through a dashboard in real-time.
+    
+    Our goal is to enhance the shopping experience while simplifying in-store tasks and also providing in depth customer behavior analysis.
+    ## Who is Buy Buddy Platform for?
+    Buy Buddy platform is available for any retailers who are in search for a new way of optimizing their in store activities and offering a new and technological way of shopping to their customers. Our devices are currently only compatible with clothing but in the near feature we want to expand our device adaptability to make our services available for a wider range of retailers.
+    # Authentication
+    The data of the users and its availability to the particular access groups carries significance, which is the main reason why authentication layer is required.
+    Therefore, in order to perform certain actions, users are required to be authenticated to our platform services.
+    Once the authentication layer identifies the user associated with requests to the platform API, the authorization layer uses information about the requesting user to determine if the request should be allowed.
+    ## Artifacts
+    ### Credentials
+    The credentials artifact is a form of "username" and a matching "password" which identifies the user.
+    It is required as the first step of authenticating to the platform.
+    Submission of credentials to the platform will grant a passphrase in return for further interaction with the system.
+    ### Passphrase
+    This artifact provides an ability to grant access on the server.
+    The passphrase is assigned after the initial submission of the user credentials.
+    It has a long expiration duration of six months and it could be stored on a device, possibly using secure persistence mechanisms (i.e. keychain).
+    A valid passphrase will be adequate to grant access to a user.
+    ### JSON Web Token (RFC 7519)
+    Contains user data signed off by the platform authority, which provides stateless authentication.
+    In many circumstances, the payload of this artifact could be read by client application, but not mutated.
+    In case of mutation, it will invalidate itself, since signature is no longer valid.
+    It has a valid duration of 15 minutes, after the duration has passed, it will invalidate itself.
+    #### Renewal
+    The JSON Web Token (JWT) will be renewed automatically after its duration ends if a valid passphrase is available. In case of both the passphrase and JWT are unavailable the user will have to authenticate using their credentials once more and obtain a new passphrase and use it to retrieve a new JWT.
+    # Authorization
+    Authorization policies determine whether a user is allowed to perform a given action within the platform. This allows platform administrators to use the existing policies to control who has various access levels to the platform itself. Note that authorization is a separate step from authentication, which is more about determining the identity of who is taking the action.
+    ## Authorization Management
+    Managing authorization and permissions per user can be a difficult job when a lot of users are involved. Incorrect management of permissions can block users from accessing required sources or even worse grant access to unauthorized users to restricted areas and perform harmful operations. Therefore authorization management is an important job and should be handled cautiously. On our platform, authorization is managed through permissions sets and permission grants. By granting permission sets to certain users, they are enabled to perform certain actions allowed by the permission set. Users can be granted more than one permission set and permission sets may override each other.
+    ### Permissions
+    Together with authentication, permissions are used to determine whether a request from a certain user should be granted or denied access. Permissions specify exactly which resources or actions can be accessed by that particular user. A permission is the simplest element of authorization.
+    #### Permission Sets
+    Permission sets, to simply put, are a set of permissions that is used to grant additional access to one or more users. You can use permission sets to grant access. To deny access one would simply not grant that certain set of permissions.
+    ### Retrieval
+    Permissions are granted through permission set grants. Once granted they usually are available for certain periods of time. They can be set to be available after a certain date. The grant would have to be invalidated to revoke the access for that particular user.
+    ### Policies
+    Policies are definitions for the permissions. More specifically, permissions define which parts of the platform can be accessed via that permission while policies will define the action a user can perform after receiving the permission.
+    ### Rate Limiting
+    Rate limiting is necessary for controlling the rate and number of requests received from an external network. We apply rate limiting on our platform to prevent DoS attacks. Rate limiting is applied to each user separately. To describe more accurately, it is applied to each users access token.
   version: 1.0.0
   title: Buy Buddy IoT Services
   contact:
@@ -16,7 +60,7 @@ paths:
   /user/sign_in/token : 
     post: 
       tags: 
-        - post
+        - Token
       summary: creates a json web token
       operationId: token
       description: By passing in the appropriate options, you create a json web token to access the platfor
@@ -46,10 +90,46 @@ paths:
                   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiZXhwIjoxNTgxNjA4MTAzLCJpYXQiOjE1ODE2MDA5MDN9.eZs3gHqD6BRK0n458-Vgww8fRanlUvdxriLSkqqz9zQ
         400: 
           description: bad input parameter
+  /merchant/item:
+    get:
+      tags:
+        - Item
+      summary: Get items
+      operationId: merchanItem
+      description: |
+        Fetch a list containing all of the items.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Item'
+        '400':
+          description: bad input parameter
+  /brand:
+    get:
+      tags:
+        - Brand
+      summary: Get brands
+      operationId: merchantBrand
+      description: |
+        Fetch a list containing all of the brands.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Brand'
+        '400':
+          description: bad input parameter
   /retail_action:
     get:
       tags:
-        - retail
+        - Retail
       summary: Get retail action
       operationId: merchantRetailAction
       description: |
@@ -81,7 +161,7 @@ paths:
   /hardware/status:
     get:
       tags:
-        - hardware status
+        - Hardware Status
       summary: Get hardware status
       operationId: merchantHardwareStatus
       description: |
@@ -114,7 +194,7 @@ paths:
   /insight:
     get:
       tags:
-        - insight
+        - Insight
       summary: Get insights
       operationId: merchantInsight
       description: |
@@ -210,8 +290,8 @@ paths:
   /stock:
     get:
       tags:
-        - stock
-      summary: Get Stock
+        - Stock
+      summary: Get stock
       operationId: merchantStock
       description: |
         You can fetch all stock related information for items in your merchant by passing in your event type, aggregation functions, time filters, sorting options, limiting options and combination options.
@@ -242,7 +322,7 @@ paths:
   /hardware:
     get:
       tags:
-        - hardware
+        - Hardware
       summary: Get hardware
       operationId: merchantHardware
       description: |
@@ -478,6 +558,36 @@ components:
           - low_batery
           - end_of_life
   schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        upc:
+          type: string
+        sku:
+          type: string
+        metadata:
+          type: string
+        brand_id:
+          type: integer
+        inserted_at:
+          type: string
+        updated_at:
+          type: string
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        inserted_at:
+          type: string
+        updated_at:
+          type: string
     Interaction:
       type: object
       properties:
