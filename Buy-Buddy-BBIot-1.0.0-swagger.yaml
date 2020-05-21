@@ -4,7 +4,7 @@ servers:
 info:
   description: |
   
-    ## Authentication
+## Authentication
     
   version: 1.0.0
   title: Buy Buddy IoT Services
