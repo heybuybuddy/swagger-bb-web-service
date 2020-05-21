@@ -3,7 +3,9 @@ servers:
   - url: 'https://api-legacy.buybuddy.co/api/v1'
 info:
   description:
-  # Authentication
+  
+    ## Authentication
+    
   version: 1.0.0
   title: Buy Buddy IoT Services
   contact:
