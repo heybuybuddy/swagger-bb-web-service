@@ -3,7 +3,6 @@ servers:
   - url: 'https://api-legacy.buybuddy.co/api/v1'
 info:
   description: |
-    This is the Buy Buddy API.
     # Introduction
     ## What is Buy Buddy Platform?
     Buy Buddy is a multi-purpose retail efficiency platform.
@@ -51,7 +50,7 @@ info:
     Rate limiting is necessary for controlling the rate and number of requests received from an external network. We apply rate limiting on our platform to prevent DoS attacks. Rate limiting is applied to each user separately. To describe more accurately, it is applied to each users access token.
     <!-- ReDoc-Inject: <security-definitions> -->
   version: 1.0.0
-  title: Buy Buddy IoT Services
+  title: Buy Buddy Web Services
   contact:
     email: emir@buybuddy.co
   license:
@@ -64,7 +63,7 @@ paths:
         - Token
       summary: creates a json web token
       operationId: token
-      description: By passing in the appropriate options, you create a json web token to access the platfor
+      description: Create a json web token using the passphrase provided on the dashboard.
       requestBody:
         required: true
         content:
@@ -91,12 +90,84 @@ paths:
                   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiZXhwIjoxNTgxNjA4MTAzLCJpYXQiOjE1ODE2MDA5MDN9.eZs3gHqD6BRK0n458-Vgww8fRanlUvdxriLSkqqz9zQ
         400: 
           description: bad input parameter
-  /merchant/item:
+  /category:
+    get:
+      tags:
+        - Category
+      summary: Get caegories
+      operationId: merchantCAtegory
+      description: |
+        Fetch a list containing all of the categories.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Category'
+        '400':
+          description: bad input parameter
+  /tag:
+    get:
+      tags:
+        - Tag
+      summary: Get tags
+      operationId: merchantTag
+      description: |
+        Fetch a list containing all of the tags.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Tag'
+        '400':
+          description: bad input parameter
+  /zone:
+    get:
+      tags:
+        - Zone
+      summary: Get zones
+      operationId: merchantZone
+      description: |
+        Fetch a list containing all of the places.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Zone'
+        '400':
+          description: bad input parameter
+  /place:
+    get:
+      tags:
+        - Place
+      summary: Get places
+      operationId: merchantPlace
+      description: |
+        Fetch a list containing all of the places.
+      responses:
+        '200':
+          description: result
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Place'
+        '400':
+          description: bad input parameter
+  /item:
     get:
       tags:
         - Item
       summary: Get items
-      operationId: merchanItem
+      operationId: merchantItem
       description: |
         Fetch a list containing all of the items.
       responses:
@@ -559,6 +630,56 @@ components:
           - low_batery
           - end_of_life
   schemas:
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        inserted_at:
+          type: string
+        updated_at:
+          type: string
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        inserted_at:
+          type: string
+        updated_at:
+          type: string
+    Zone:
+      type: object
+      properties:
+        id:
+          type: integer
+        store_id:
+          type: integer
+        name:
+          type: string
+        inserted_at:
+          type: string
+        updated_at:
+          type: string
+    Place:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        inserted_at:
+          type: string
+        updated_at:
+          type: string
     Item:
       type: object
       properties:
