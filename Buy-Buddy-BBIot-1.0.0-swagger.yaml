@@ -7,7 +7,7 @@ info:
     You can find out more about Swagger at
     [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).
     For this sample, you can use the api key `special-key` to test the authorization filters.
-    ## Introduction
+    # Introduction
     ## What is Buy Buddy Platform?
     Buy Buddy is a multi-purpose retail efficiency platform.
     By using the payment device for retailers that are attached to the items in their shops we allow customers to directly pay through their mobile phones and check out of the store.
