@@ -4,7 +4,7 @@ servers:
 info:
   description: |
   Buy Buddy Developer's API
-  ## Manage Client-Side Customization Module
+  # Manage Client-Side Customization Module
   
   version: 1.0.0
   title: Buy Buddy IoT Services
