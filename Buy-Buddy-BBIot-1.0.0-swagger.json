@@ -5,9 +5,7 @@
   } ],
   "info" : {
     "description" : "Buy Buddy Developer's API",
-    
-     ## Manage Client-Side Customization Module
-    
+    \n\n## Manage Client-Side Customization Module
     "version" : "1.0.0",
     "title" : "Buy Buddy IoT Services",
     "contact" : {
