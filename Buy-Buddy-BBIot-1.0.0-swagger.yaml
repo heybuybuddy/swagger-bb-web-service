@@ -6,11 +6,7 @@ info:
     # Introduction
     ## What is Buy Buddy Platform?
     Buy Buddy is a multi-purpose retail efficiency platform.
-    By using the payment device for retailers that are attached to the items in their shops we allow customers to directly pay through their mobile phones and check out of the store.
-    
-    Hitags are also capable of collecting customer behavior, employee performance, product efficiency, inventory data for retailers and present them through a dashboard in real-time.
-    
-    Our goal is to enhance the shopping experience while simplifying in-store tasks and also providing in depth customer behavior analysis.
+ 
     ## Who is Buy Buddy Platform for?
     Buy Buddy platform is available for any retailers who are in search for a new way of optimizing their in store activities and offering a new and technological way of shopping to their customers. Our devices are currently only compatible with clothing but in the near feature we want to expand our device adaptability to make our services available for a wider range of retailers.
     # Authentication
@@ -98,8 +94,8 @@ paths:
     get:
       tags:
         - Category
-      summary: Get caegories
-      operationId: merchantCAtegory
+      summary: Get categories
+      operationId: merchantCategory
       description: |
         Fetch a list containing all of the categories.
       responses:
@@ -254,8 +250,13 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/RetailAction'
+                type: object
+                properties:
+                  actions:
+                    items:
+                      $ref: '#/components/schemas/RetailAction'
+                  total_aggregation_calculation:
+                     type: integer
         400:
          $ref: '#/components/responses/BadRequest'
         401:
@@ -291,8 +292,13 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Hardware'
+                type: object
+                properties:
+                  stasus:
+                    items:
+                      $ref: '#/components/schemas/Hardware'
+                  total_aggregation_calculation:
+                     type: integer
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -327,8 +333,13 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Insight'
+                type: object
+                properties:
+                  insights:
+                    items:
+                      $ref: '#/components/schemas/Insight'
+                  total_aggregation_calculation:
+                     type: integer
         400:
          $ref: '#/components/responses/BadRequest'
         401:
@@ -363,8 +374,13 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Security'
+                type: object
+                properties:
+                  security_events:
+                    items:
+                      $ref: '#/components/schemas/Security'
+                  total_aggregation_calculation:
+                     type: integer
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -399,8 +415,13 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Interaction'
+                type: object
+                properties:
+                  interaction_events:
+                    items:
+                      $ref: '#/components/schemas/Interaction'
+                  total_aggregation_calculation:
+                     type: integer
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -435,8 +456,13 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Stock'
+                type: object
+                properties:
+                  stock_events:
+                    items:
+                      $ref: '#/components/schemas/Stock'
+                  total_aggregation_calculation:
+                     type: integer
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -471,8 +497,13 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Hardware'
+                type: object
+                properties:
+                  hardware:
+                    items:
+                      $ref: '#/components/schemas/Hardware'
+                  total_aggregation_calculation:
+                     type: integer
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -548,7 +579,7 @@ components:
           - unpair_item
           - find
           - set
-          - transger
+          - transfer
           - assign
           - ring
     InteractionEvent:
@@ -809,69 +840,98 @@ components:
     Interaction:
       type: object
       properties:
-        interaction:
-          type: string
-        device_identifier:
-          type: string
         item:
+          type: object
+          properties:
+            upc: 
+              type: string
+            name: 
+              type: string
+        device:
+          type: object
+          properties:
+            identifier:
+              type: string
+            type: 
+              type: string
+        interaction_event:
           type: string
-        store:
-          type: string
-        aggregation_calculation:
-          type: integer
     Insight:
       type: object
       properties:
         item:
+          type: object
+          properties:
+            name:
+              type: string
+            upc: 
+              type: string
+        event:
           type: string
-        insight_calculation:
-          type: integer
-        aggregation_calculation:
-          type: integer
     Security:
       type: object
       properties:
-        security_state:
-          type: string
-        device_identifier:
-          type: string
         item:
-          type: string
-        store:
-          type: string
-        aggregation_calculation:
+          type: object
+          properties:
+            upc: 
+              type: string
+            name: 
+              type: string
+        device:
+          type: object
+          properties:
+            identifier:
+              type: string
+            type: 
+              type: string
+        user_id:
           type: integer
+        event: 
+          type: string
     Stock:
       type: object
       properties:
         item:
-          type: string
-        store:
-          type: string
-        aggregation_calculation:
-          type: integer
+          type: object
+          properties:
+            upc: 
+              type: string
+            name: 
+              type: string
     RetailAction:
       type: object
       properties:
-        aggregation_calculation:
+        item:
+          type: object
+          properties:
+            upc: 
+              type: string
+            name: 
+              type: string
+        device:
+          type: object
+          properties:
+            identifier:
+              type: string
+            type: 
+              type: string
+        user_id:
           type: integer
-        event_type:
-          type: string
-        count:
-          type: integer
-        store:
+        action:
           type: string
     Hardware:
       type: object
       properties:
-        aggregation_calculation:
-          type: integer
-        store:
-          type: string
-        device_identifier:
-          type: string
-        hardware_type:
-          type: string
+         device:
+          type: object
+          properties:
+            identifier:
+              type: string
+            type: 
+              type: string
+            state:
+              type: string
 tags:
   - name: Token
   - name: Category
@@ -879,24 +939,24 @@ tags:
   - name: Tag
     description: Tags represent the features of your items. Tags make it easier to pinpoint items for specific analytic search cases. The API allows you to fetch all the tags described on the Buy Buddy platform.
   - name: Zone
-    description: Zones are areas located inside stores that cover certain parts of the store. The API allows you to fetch all the zones paired to the stores.
+    description: Zones are specific parts of the places that can represent a category, department or a uniquely named space. The API allows you to fetch all the zones paired with places.
   - name: Place
-    description: Places represent either a store or a warehouse owned by your merchant. The API allows you to fetch all stored places on the Buy Buddy platform. 
+    description: Places represent either a store, a warehouse or a uniquely named location assigned to a merchant. The API allows you to fetch all stored places on the Buy Buddy platform. 
   - name: Item
     description: Items represent the specific goods or services you offer to your customers. The API allows you to fetch all the items recorded in the Buy Buddy platform.
   - name: Brand
     description: Brands are types of products manufactured by particular companies under a particular name. The API allows you to fetch all the brands paired to the items.
   - name: Retail Action
-    description: Retail actions represent all of the operations done on products and Buy Buddy devices such as pairing, transfering, silencing, etc. The API allows you to fetch all the actions done on products or devices.
+    description: Retail actions represent all of the operations done on items and Buy Buddy devices such as pairing, transfering, silencing, etc. The API allows you to fetch all the actions done on items or devices.
   - name: Hardware Status
     description: Hardware status describes all of the states the Buy Buddy devices go through throughout their lifecycles. These states include both production stage and in store usage stages. The API allows you to fetch all the states of the hardware devices.
   - name: Insight
     description: Insight is gained by analyzing the data and information collected by the Buy Buddy devices to better understand customer behaviour and enables you to make better desicions for certain situations. The API allows you to fetch all business insights collected by Buy Buddy Devices.
   - name: Security Event
-    description: Security events represent all of the alarm states of the Buy Buddy devices. Such as alarmed, missing, active, ect.
+    description: Security events represent all of the security states of the Buy Buddy devices. Such as alarmed, missing, active, ect.
   - name: Interaction Event
     description: Interaction events represent all customer interactions made with Buy Buddy devices. The API allows you to fetch all interactions made with the devices and also the detailed information of these interacions.
   - name: Stock
     description: Stock represents your merchandise kept on the premises of a shop or warehouse and available for sale or distribution. You can fetch your stock numbers on the condition that they are paierd with a Buy Buddy device.
   - name: Hardware
-    description: Hardware describes all of the devices user in your store. Currently only two types of hardware exists which are the tags and the scanners. The API allows you to fetch all hardware objects assigned to you merchant.
+    description: Hardware describes all of the devices used in your store. Currently only two types of hardware exists which are the tags and the scanners. The API allows you to fetch all hardware objects assigned to you merchant.
