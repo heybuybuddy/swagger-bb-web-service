@@ -253,7 +253,7 @@ paths:
               schema:
                 oneOf:
                   - $ref: '#/components/schemas/RetailActionRespone'
-                  
+                  - $ref: '#/components/schemas/Hardware'
            
         400:
          $ref: '#/components/responses/BadRequest'
