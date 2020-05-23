@@ -242,6 +242,7 @@ paths:
         - $ref: '#/components/parameters/RetailEvent'
         - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/GroupBy'
         - $ref: '#/components/parameters/Sort'
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -250,13 +251,10 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  actions:
-                    items:
-                      $ref: '#/components/schemas/RetailAction'
-                  total_aggregation_calculation:
-                     type: integer
+                oneOf:
+                  - $ref: '#/components/schemas/RetailActionRespone'
+                  
+           
         400:
          $ref: '#/components/responses/BadRequest'
         401:
@@ -284,6 +282,7 @@ paths:
         - $ref: '#/components/parameters/HardwareStatusEvent'
         - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/GroupBy'
         - $ref: '#/components/parameters/Sort'
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -325,6 +324,7 @@ paths:
         - $ref: '#/components/parameters/AggregationFunction'
         - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/GroupBy'
         - $ref: '#/components/parameters/Sort'
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -366,6 +366,7 @@ paths:
         - $ref: '#/components/parameters/AggregationFunction'
         - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/GroupBy'
         - $ref: '#/components/parameters/Sort'
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -407,6 +408,7 @@ paths:
         - $ref: '#/components/parameters/AggregationFunction'
         - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/GroupBy'
         - $ref: '#/components/parameters/Sort'
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -448,6 +450,7 @@ paths:
         - $ref: '#/components/parameters/AggregationFunction'
         - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/GroupBy'
         - $ref: '#/components/parameters/Sort'
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -489,6 +492,7 @@ paths:
         - $ref: '#/components/parameters/HardwareEvent'
         - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/GroupBy'
         - $ref: '#/components/parameters/Sort'
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -679,6 +683,19 @@ components:
         items:
           type: integer
       required: false 
+    GroupBy:
+      in: query
+      name: group_by
+      schema:
+        type: string
+        enum:
+          - zone
+          - item
+          - brand
+          - category
+          - place
+          - user
+          - tag
     InsightType:
       in: query
       name: event_type
@@ -899,6 +916,14 @@ components:
               type: string
             name: 
               type: string
+    RetailActionRespone:
+      type: object
+      properties:
+        actions:
+          items:
+            $ref: '#/components/schemas/RetailAction'
+        total_aggregation_calculation:
+            type: integer
     RetailAction:
       type: object
       properties:
