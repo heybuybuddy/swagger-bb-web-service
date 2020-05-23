@@ -252,9 +252,20 @@ paths:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/RetailActionRespone'
-                  - $ref: '#/components/schemas/Hardware'
-           
+                  - type: object
+                    properties:
+                      actions:
+                        items:
+                          $ref: '#/components/schemas/RetailAction'
+                      total_aggregation_calculation:
+                        type: integer
+                  - type: object
+                    properties:
+                      zones:
+                        items:
+                          $ref: '#/components/schemas/ZonePartition'
+                      total_aggregation_calculation:
+                        type: integer
         400:
          $ref: '#/components/responses/BadRequest'
         401:
@@ -796,6 +807,15 @@ components:
           type: string
         updated_at:
           type: string
+    ZonePartition:
+      type: object
+      properties:
+        store:
+          type: integer
+        name:
+          type: string
+        aggregation_calculation:
+          type: integer
     Zone:
       type: object
       properties:
@@ -916,14 +936,6 @@ components:
               type: string
             name: 
               type: string
-    RetailActionRespone:
-      type: object
-      properties:
-        actions:
-          items:
-            $ref: '#/components/schemas/RetailAction'
-        total_aggregation_calculation:
-            type: integer
     RetailAction:
       type: object
       properties:
