@@ -338,7 +338,7 @@ paths:
   /security:
     get:
       tags:
-        - Security
+        - Security Event
       summary: Get security events
       operationId: merchantSecurity
       description: |
@@ -374,7 +374,7 @@ paths:
   /interaction:
     get:
       tags:
-        - Interaction
+        - Interaction Event
       summary: Get interaction events
       operationId: merchantInteraction
       description: |
@@ -580,7 +580,7 @@ components:
     PlaceID:
       in: query
       name: place_id
-      description: The place id's of the 
+      description: The place id's of place objects to customize your query
       schema:
         type: array
         items:
@@ -589,7 +589,7 @@ components:
     CategoryID:
       in: query
       name: category_id
-      description: The category id's of 
+      description: The category id's of item objects to customize your query
       schema:
         type: array
         items:
@@ -598,7 +598,7 @@ components:
     TagID:
       in: query
       name: tag_id
-      description: The tag id's of the 
+      description: The tag id's of tag objects to customize your query
       schema:
         type: array
         items:
@@ -607,7 +607,7 @@ components:
     ItemID:
       in: query
       name: item_id
-      description: The item id's of the 
+      description: The item id's of the item objects to customize your query
       schema:
         type: array
         items:
@@ -616,7 +616,6 @@ components:
     StoreID:
       in: query
       name: store_id
-      description: The store id's of the 
       schema:
         type: array
         items:
@@ -625,7 +624,7 @@ components:
     ZoneID:
       in: query
       name: zone_id
-      description: The zone id's of the 
+      description: The zone id's of zone objects to customize your query
       schema:
         type: array
         items:
@@ -634,7 +633,7 @@ components:
     BrandID:
       in: query
       name: brand_id
-      description: The brand id's of the 
+      description: The brand id's of brand objects to customize your query
       schema:
         type: array
         items:
@@ -643,7 +642,7 @@ components:
     UserID:
       in: query
       name: user_id
-      description: The user id's of the 
+      description: The user id's of the user objects to customize your query
       schema:
         type: array
         items:
@@ -875,30 +874,29 @@ components:
           type: string
 tags:
   - name: Token
-    description: asdasdasd
   - name: Category
     description: Categories are groups of products that meet similar needs. The API allows you to fetch all of the categories paired to your items.
   - name: Tag
-    description: asdasdasd
+    description: Tags represent the features of your items. Tags make it easier to pinpoint items for specific analytic search cases. The API allows you to fetch all the tags described on the Buy Buddy platform.
   - name: Zone
     description: Zones are areas located inside stores that cover certain parts of the store. The API allows you to fetch all the zones paired to the stores.
   - name: Place
-    description: asdasdasd
+    description: Places represent either a store or a warehouse owned by your merchant. The API allows you to fetch all stored places on the Buy Buddy platform. 
   - name: Item
-    description: asdasdasd
+    description: Items represent the specific goods or services you offer to your customers. The API allows you to fetch all the items recorded in the Buy Buddy platform.
   - name: Brand
     description: Brands are types of products manufactured by particular companies under a particular name. The API allows you to fetch all the brands paired to the items.
   - name: Retail Action
     description: Retail actions represent all of the operations done on products and Buy Buddy devices such as pairing, transfering, silencing, etc. The API allows you to fetch all the actions done on products or devices.
   - name: Hardware Status
-    description: asdasdasd
+    description: Hardware status describes all of the states the Buy Buddy devices go through throughout their lifecycles. These states include both production stage and in store usage stages. The API allows you to fetch all the states of the hardware devices.
   - name: Insight
-    description: asdasdasd
+    description: Insight is gained by analyzing the data and information collected by the Buy Buddy devices to better understand customer behaviour and enables you to make better desicions for certain situations. The API allows you to fetch all business insights collected by Buy Buddy Devices.
   - name: Security Event
     description: Security events represent all of the alarm states of the Buy Buddy devices. Such as alarmed, missing, active, ect.
   - name: Interaction Event
-    description: asdasdasd
+    description: Interaction events represent all customer interactions made with Buy Buddy devices. The API allows you to fetch all interactions made with the devices and also the detailed information of these interacions.
   - name: Stock
-    description: asdasdasd
+    description: Stock represents your merchandise kept on the premises of a shop or warehouse and available for sale or distribution. You can fetch your stock numbers on the condition that they are paierd with a Buy Buddy device.
   - name: Hardware
-    description: asdasdasd
+    description: Hardware describes all of the devices user in your store. Currently only two types of hardware exists which are the tags and the scanners. The API allows you to fetch all hardware objects assigned to you merchant.
