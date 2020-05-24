@@ -925,6 +925,39 @@ components:
               type: string
             name: 
               type: string
+    RetailAction:
+      type: object
+      properties:
+        item:
+          type: object
+          properties:
+            upc: 
+              type: string
+            name: 
+              type: string
+        device:
+          type: object
+          properties:
+            identifier:
+              type: string
+            type: 
+              type: string
+        user_id:
+          type: integer
+        action:
+          type: string
+    Hardware:
+      type: object
+      properties:
+         device:
+          type: object
+          properties:
+            identifier:
+              type: string
+            type: 
+              type: string
+            status:
+              type: string
     PlacePartition:
       type: object
       properties:
@@ -981,6 +1014,8 @@ components:
         places:
           items:
             $ref: '#/components/schemas/PlacePartition'
+        total_aggregation_calculation:
+          type: integer
     UserResponse:
       type: object
       properties:
@@ -1000,7 +1035,7 @@ components:
     HardwareStatusResponse:
       type: object
       properties:
-        actions:
+        stasuses:
           items:
             $ref: '#/components/schemas/Hardware'
         total_aggregation_calculation:
@@ -1008,7 +1043,7 @@ components:
     InsightResponse:
       type: object
       properties:
-        actions:
+        insights:
           items:
             $ref: '#/components/schemas/Insight'
         total_aggregation_calculation:
@@ -1016,7 +1051,7 @@ components:
     StockResponse:
       type: object
       properties:
-        actions:
+        stocks:
           items:
             $ref: '#/components/schemas/Stock'
         total_aggregation_calculation:
@@ -1024,7 +1059,7 @@ components:
     SecurityResponse:
       type: object
       properties:
-        actions:
+        security_events:
           items:
             $ref: '#/components/schemas/Security'
         total_aggregation_calculation:
@@ -1032,7 +1067,7 @@ components:
     InteractionResponse:
       type: object
       properties:
-        actions:
+        interaction_events:
           items:
             $ref: '#/components/schemas/Interaction'
         total_aggregation_calculation:
@@ -1061,39 +1096,6 @@ components:
             $ref: '#/components/schemas/RetailAction'
         total_aggregation_calculation:
           type: integer
-    RetailAction:
-      type: object
-      properties:
-        item:
-          type: object
-          properties:
-            upc: 
-              type: string
-            name: 
-              type: string
-        device:
-          type: object
-          properties:
-            identifier:
-              type: string
-            type: 
-              type: string
-        user_id:
-          type: integer
-        action:
-          type: string
-    Hardware:
-      type: object
-      properties:
-         device:
-          type: object
-          properties:
-            identifier:
-              type: string
-            type: 
-              type: string
-            state:
-              type: string
 tags:
   - name: Token
   - name: Category
