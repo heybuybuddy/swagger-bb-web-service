@@ -8,7 +8,7 @@ info:
     Buy Buddy is a multi-purpose retail efficiency platform.
  
     ## Who is Buy Buddy Platform for?
-    Buy Buddy platform is available for any retailers who are in search for a new way of optimizing their in store activities and offering a new and technological way of shopping to their customers. Our devices are currently only compatible with clothing but in the near feature we want to expand our device adaptability to make our services available for a wider range of retailers.
+    Buy Buddy platform is available for any retailers who are in search for a new way of optimizing their in store activities and offering a new and technological way of shopping to their customers.
     # Authentication
     The data of the users and its availability to the particular access groups carries significance, which is the main reason why authentication layer is required.
     Therefore, in order to perform certain actions, users are required to be authenticated to our platform services.
