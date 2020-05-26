@@ -59,9 +59,9 @@ paths:
     post:
       tags:
         - Webhook
-      summary: Subscribe to a webhook
+      summary: Create webhook
       description: |
-        Create a webhook to subscribe to interaction events.
+        Create a webhook to subscribe to certain events.
       requestBody:
         required: true
         content:
