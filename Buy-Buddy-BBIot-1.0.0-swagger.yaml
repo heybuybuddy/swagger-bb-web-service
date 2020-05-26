@@ -78,6 +78,7 @@ paths:
                   enum:
                     - interaction
                     - security
+                  example: [interaction, security]
               required:
                 - callbackUrl
       callbacks:   # Callback definition
