@@ -55,11 +55,52 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 paths:
+  /webhook/subscribe:
+    post:
+      tags:
+        - Webhook
+      summary: Subscribe to a webhook
+      description: |
+        Create a webhook to subscribe to interaction events.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                callback_url:   # Callback URL
+                  type: string
+                  format: uri
+                  example: https://myserver.com/send/callback/here
+                enabled_events:
+                  type: string
+                  enum:
+                    - interaction
+              required:
+                - callbackUrl
+      callbacks:   # Callback definition
+        interactionEvent:   # Event name
+          '{$request.body#/callbackUrl}':   # The callback URL,
+                                            # Refers to the passed URL
+            post:
+              requestBody:   # Contents of the callback message
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/EventCallBackResponse'
+              responses:   # Expected responses to the callback message
+                '200':
+                  description: Your server returns this code if it accepts the callback
+      responses:
+        '201':
+          description: Webhook created
   /user/sign_in/token : 
     post: 
       tags:
         - Token
-      summary: creates a json web token
+      summary: Create json web token
       operationId: token
       description: Create a json web token using the passphrase provided on the dashboard.
       requestBody:
@@ -1096,6 +1137,27 @@ components:
             $ref: '#/components/schemas/RetailAction'
         total_aggregation_calculation:
           type: integer
+    EventCallBackResponse:
+      type: object
+      properties:
+        user_id: 
+          type: integer
+        user_ext_id: 
+          type: string
+        event_type:
+          type: string
+          enum:
+            - picked_up
+            - walking
+            - abandoned
+        time: 
+          type: string
+        device_id: 
+          type: integer
+        item_id: 
+          type: integer
+        item_ext_id: 
+          type: string
 tags:
   - name: Token
   - name: Category
@@ -1124,3 +1186,5 @@ tags:
     description: Stock represents your merchandise kept on the premises of a shop or warehouse and available for sale or distribution. You can fetch your stock numbers on the condition that they are paierd with a Buy Buddy device.
   - name: Hardware
     description: Hardware describes all of the devices used in your store. Currently only two types of hardware exists which are the tags and the scanners. The API allows you to fetch all hardware objects assigned to you merchant.
+  - name: Webhook
+    description: You can subscribe to webhook endpoints via the API to be notified about interaction events.
