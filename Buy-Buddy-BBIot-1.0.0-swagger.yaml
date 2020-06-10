@@ -511,7 +511,7 @@ paths:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/StockResponse'
+                  - $ref: '#/components/schemas/ItemResponse'
                   - $ref: '#/components/schemas/ZoneResponse'
                   - $ref: '#/components/schemas/CategoryResponse'
                   - $ref: '#/components/schemas/BrandResponse'
@@ -789,7 +789,7 @@ components:
       schema:
         type: string
         enum:
-          - item
+          - stock
           - stock_out
           - min_stock
     HardwareEvent:
@@ -969,6 +969,9 @@ components:
               type: string
             name: 
               type: string
+            aggregation_calculation:
+              type: integer
+            
     RetailAction:
       type: object
       properties:
@@ -1092,7 +1095,7 @@ components:
             $ref: '#/components/schemas/Insight'
         total_aggregation_calculation:
           type: integer
-    StockResponse:
+    ItemResponse:
       type: object
       properties:
         stocks:
