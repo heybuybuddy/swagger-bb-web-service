@@ -791,6 +791,7 @@ components:
         enum:
           - item
           - stock_out
+          - min_stock
     HardwareEvent:
       in: query
       name: hardware_type
