@@ -814,7 +814,7 @@ components:
           - assigned
           - in_use
           - maintenance
-          - low_batery
+          - low_battery
           - end_of_life
   schemas:
     Error:
