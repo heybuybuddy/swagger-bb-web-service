@@ -1153,13 +1153,16 @@ components:
         event_type:
           type: string
           enum:
+            - browsing
             - picked_up
             - walking
             - abandoned
         time: 
           type: string
+        zone:
+          type: string
         device_id: 
-          type: integer
+          type: string
         item_id: 
           type: integer
         item_ext_id: 
