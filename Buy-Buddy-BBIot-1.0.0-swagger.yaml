@@ -272,7 +272,7 @@ paths:
       summary: Get retail action
       operationId: merchantRetailAction
       description: |
-        You can fetch all item related retail action information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options.
+        You can fetch all item related retail action information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event. 
       parameters:
         - $ref: '#/components/parameters/PlaceID'
         - $ref: '#/components/parameters/BrandID'
@@ -315,7 +315,7 @@ paths:
       summary: Get hardware status
       operationId: merchantHardwareStatus
       description: |
-        You can fetch all hardware status related information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options.
+        You can fetch all hardware status related information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event. 
       parameters:
         - $ref: '#/components/parameters/PlaceID'
         - $ref: '#/components/parameters/BrandID'
@@ -911,13 +911,10 @@ components:
     Interaction:
       type: object
       properties:
-        item:
-          type: object
-          properties:
-            upc: 
-              type: string
-            name: 
-              type: string
+        upc: 
+          type: string
+        name: 
+          type: string
         meta_data:
           type: object
           properties:
@@ -930,18 +927,15 @@ components:
     Insight:
       type: object
       properties:
-        item:
+        name:
+          type: string
+        upc: 
+          type: string
+        meta_data:
           type: object
           properties:
-            name:
+            image_url:
               type: string
-            upc: 
-              type: string
-            meta_data:
-              type: object
-              properties:
-                image_url:
-                  type: string
         event:
           type: string
     Security:
@@ -1056,99 +1050,135 @@ components:
     TagResponse:
       type: object
       properties:
-        tags:
-          items:
-            $ref: '#/components/schemas/TagPartition'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            tags:
+              items:
+               $ref: '#/components/schemas/TagPartition'
+            total_aggregation_calculation:
+              type: integer
     PlaceResponse:
       type: object
       properties:
-        places:
-          items:
-            $ref: '#/components/schemas/PlacePartition'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            places:
+              items:
+                $ref: '#/components/schemas/PlacePartition'
+            total_aggregation_calculation:
+              type: integer
     UserResponse:
       type: object
       properties:
-        users:
-          items:
-            $ref: '#/components/schemas/UserPartition'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            users:
+              items:
+                $ref: '#/components/schemas/UserPartition'
+            total_aggregation_calculation:
+              type: integer
     BrandResponse:
       type: object
       properties:
-        brands:
-          items:
-            $ref: '#/components/schemas/BrandPartition'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            brands:
+              items:
+                $ref: '#/components/schemas/BrandPartition'
+            total_aggregation_calculation:
+              type: integer
     HardwareStatusResponse:
       type: object
       properties:
-        stasuses:
-          items:
-            $ref: '#/components/schemas/Hardware'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            stasuses:
+              items:
+                $ref: '#/components/schemas/Hardware'
+            total_aggregation_calculation:
+              type: integer
     InsightResponse:
       type: object
       properties:
-        items:
-          items:
-            $ref: '#/components/schemas/Insight'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            items:
+              items:
+                $ref: '#/components/schemas/Insight'
+            total_aggregation_calculation:
+              type: integer
     ItemResponse:
       type: object
       properties:
-        stocks:
-          items:
-            $ref: '#/components/schemas/Stock'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            stocks:
+              items:
+                $ref: '#/components/schemas/Stock'
+            total_aggregation_calculation:
+              type: integer
     SecurityResponse:
       type: object
       properties:
-        security_events:
-          items:
-            $ref: '#/components/schemas/Security'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            security_events:
+              items:
+                $ref: '#/components/schemas/Security'
+            total_aggregation_calculation:
+              type: integer
     InteractionResponse:
       type: object
       properties:
-        items:
-          items:
-            $ref: '#/components/schemas/Interaction'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            items:
+              items:
+                $ref: '#/components/schemas/Interaction'
+            total_aggregation_calculation:
+              type: integer
     CategoryResponse:
       type: object
       properties:
-        categories:
-          items:
-            $ref: '#/components/schemas/CategoryPartition'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            categories:
+              items:
+                $ref: '#/components/schemas/CategoryPartition'
+            total_aggregation_calculation:
+              type: integer
     ZoneResponse:
       type: object
       properties:
-        zones:
-          items:
-            $ref: '#/components/schemas/ZonePartition'
-        total_aggregation_calculation:
-          type: integer
+       data:
+          type: object
+          properties:
+            zones:
+              items:
+                $ref: '#/components/schemas/ZonePartition'
+            total_aggregation_calculation:
+              type: integer
     RetailResponse:
       type: object
       properties:
-        actions:
-          items:
-            $ref: '#/components/schemas/RetailAction'
-        total_aggregation_calculation:
-          type: integer
+        data:
+          type: object
+          properties:
+            actions:
+              items:
+                $ref: '#/components/schemas/RetailAction'
+            total_aggregation_calculation:
+              type: integer
     EventCallBackResponse:
       type: object
       properties:
