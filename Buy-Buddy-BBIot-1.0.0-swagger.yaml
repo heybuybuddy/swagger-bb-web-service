@@ -469,6 +469,7 @@ paths:
               schema:
                 oneOf:
                   - $ref: '#/components/schemas/InteractionResponse'
+                  - $ref: '#/components/schemas/ItemResponse'
                   - $ref: '#/components/schemas/ZoneResponse'
                   - $ref: '#/components/schemas/CategoryResponse'
                   - $ref: '#/components/schemas/BrandResponse'
@@ -917,13 +918,13 @@ components:
               type: string
             name: 
               type: string
-        device:
+        meta_data:
           type: object
           properties:
-            identifier:
+            image_url:
               type: string
-            type: 
-              type: string
+        rank: 
+          type: integer
         interaction_event:
           type: string
     Insight:
@@ -936,6 +937,11 @@ components:
               type: string
             upc: 
               type: string
+            meta_data:
+              type: object
+              properties:
+                image_url:
+                  type: string
         event:
           type: string
     Security:
@@ -1090,7 +1096,7 @@ components:
     InsightResponse:
       type: object
       properties:
-        insights:
+        items:
           items:
             $ref: '#/components/schemas/Insight'
         total_aggregation_calculation:
@@ -1114,7 +1120,7 @@ components:
     InteractionResponse:
       type: object
       properties:
-        interaction_events:
+        items:
           items:
             $ref: '#/components/schemas/Interaction'
         total_aggregation_calculation:
@@ -1147,8 +1153,6 @@ components:
       type: object
       properties:
         user_id: 
-          type: integer
-        user_ext_id: 
           type: string
         event_type:
           type: string
@@ -1165,8 +1169,6 @@ components:
           type: string
         item_id: 
           type: integer
-        item_ext_id: 
-          type: string
 tags:
   - name: Token
   - name: Category
