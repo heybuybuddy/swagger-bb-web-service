@@ -147,8 +147,12 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Category'
+                type: object
+                properties:
+                  data: 
+                    items:
+                      $ref: '#/components/schemas/Category'
+              
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -169,8 +173,11 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Tag'
+                type: object
+                properties:
+                  data: 
+                    items:
+                      $ref: '#/components/schemas/Tag'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -191,8 +198,11 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Zone'
+                type: object
+                properties:
+                  data: 
+                    items:
+                      $ref: '#/components/schemas/Zone'
         400:
          $ref: '#/components/responses/BadRequest'
         401:
@@ -213,8 +223,11 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Place'
+                type: object
+                properties:
+                  data: 
+                    items:
+                      $ref: '#/components/schemas/Place'
         400:
          $ref: '#/components/responses/BadRequest'
         401:
@@ -235,8 +248,11 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Item'
+                type: object
+                properties:
+                  data: 
+                    items:
+                      $ref: '#/components/schemas/Item'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -257,8 +273,11 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Brand'
+                type: object
+                properties:
+                  data: 
+                    items:
+                      $ref: '#/components/schemas/Brand'
         400:
          $ref: '#/components/responses/BadRequest'
         401:
@@ -556,11 +575,14 @@ paths:
               schema:
                 type: object
                 properties:
-                  hardware:
-                    items:
-                      $ref: '#/components/schemas/Hardware'
-                  total_aggregation_calculation:
-                     type: integer
+                  data: 
+                    type: object
+                    properties:
+                      hardware:
+                        items:
+                          $ref: '#/components/schemas/Hardware'
+                      total_aggregation_calculation:
+                        type: integer
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -996,6 +1018,7 @@ components:
     Hardware:
       type: object
       properties:
+      
          device:
           type: object
           properties:
