@@ -241,7 +241,9 @@ paths:
       summary: Get items
       operationId: merchantItem
       description: |
-        Fetch a list containing all of the items.
+        Fetch a list containing all of the items. Add barcodes as query parameters to fetch specific items.
+      parameters:
+        - $ref: '#/components/parameters/ItemBarcode'
       responses:
         200:
           description: result
@@ -673,6 +675,12 @@ components:
           - browsing
           - walking
           - abandoned
+    ItemBarcode:
+      in: query
+      name: item_barcode
+      description: Specify the barcode of items to fetch.
+      schema:
+        type: string
     StartDate:
       in: query
       name: start_date
