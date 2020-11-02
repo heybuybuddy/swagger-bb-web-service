@@ -1228,8 +1228,8 @@ components:
           type: string
         device_id: 
           type: string
-        item_id: 
-          type: integer
+        item_barcode: 
+          type: string
 tags:
   - name: Token
   - name: Category
