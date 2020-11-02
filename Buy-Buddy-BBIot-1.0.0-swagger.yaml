@@ -1222,7 +1222,7 @@ components:
             - picked_up
             - walking
             - abandoned
-        time: 
+        time_stamp: 
           type: string
         zone:
           type: string
