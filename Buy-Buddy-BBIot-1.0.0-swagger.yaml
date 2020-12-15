@@ -44,6 +44,9 @@ info:
     Policies are definitions for the permissions. More specifically, permissions define which parts of the platform can be accessed via that permission while policies will define the action a user can perform after receiving the permission.
     ### Rate Limiting
     Rate limiting is necessary for controlling the rate and number of requests received from an external network. We apply rate limiting on our platform to prevent DoS attacks. Rate limiting is applied to each user separately. To describe more accurately, it is applied to each users access token.
+    # Errors
+    Buy Buddy API uses conventional HTTP response codes to indicate the success or failure of an API request. In general; Codes in the 2xx range indicate success. Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the 5xx range indicate an error with Buy Buddy servers (these are rare).
+    <!-- ReDoc-Inject: <security-definitions> -->
     # Webhook Signatures (HMACs)
     When data is sent to external services from the Buy Buddy API(e.g. when a webhook is triggered by an event), the payload will be authenticated with a [hash-based message authentication code (HMAC)](https://en.wikipedia.org/wiki/HMAC).
     
@@ -85,9 +88,6 @@ info:
         throw new Error("HMAC did not authenticate");
     }
     ```
-    # Errors
-    Buy Buddy API uses conventional HTTP response codes to indicate the success or failure of an API request. In general; Codes in the 2xx range indicate success. Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the 5xx range indicate an error with Buy Buddy servers (these are rare).
-    <!-- ReDoc-Inject: <security-definitions> -->
   version: 1.0.0
   title: Buy Buddy Web Services
   contact:
