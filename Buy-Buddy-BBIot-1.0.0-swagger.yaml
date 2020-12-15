@@ -46,7 +46,9 @@ info:
     Rate limiting is necessary for controlling the rate and number of requests received from an external network. We apply rate limiting on our platform to prevent DoS attacks. Rate limiting is applied to each user separately. To describe more accurately, it is applied to each users access token.
     # Webhook Signatures (HMACs)
     When data is sent to external services from the Buy Buddy API(e.g. when a webhook is triggered by an event), the payload will be authenticated with a [hash-based message authentication code (HMAC)](https://en.wikipedia.org/wiki/HMAC).
-    THe HMAC is created using a key which is a shared secret, and you verify it by running the algorithm yourself with the payload and the key to re-create the HMAC.
+    
+    The HMAC is created using a key which is a shared secret, and you verify it by running the algorithm yourself with the payload and the key to re-create the HMAC.
+    
     This verifies that the sender of the message knows the secret key.
     ## Secret Key
     You can generate your keys through the developers portal on the Buy Buddy Dashboard. Your keys will remain visible on the dashboard in case you ever loose it.
