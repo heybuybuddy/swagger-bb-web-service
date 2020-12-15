@@ -44,7 +44,46 @@ info:
     Policies are definitions for the permissions. More specifically, permissions define which parts of the platform can be accessed via that permission while policies will define the action a user can perform after receiving the permission.
     ### Rate Limiting
     Rate limiting is necessary for controlling the rate and number of requests received from an external network. We apply rate limiting on our platform to prevent DoS attacks. Rate limiting is applied to each user separately. To describe more accurately, it is applied to each users access token.
-    #Errors
+    # Webhook Signatures (HMACs)
+    When data is sent to external services from the Buy Buddy API(e.g. when a webhook is triggered by an event), the payload will be authenticated with a [hash-based message authentication code (HMAC)](https://en.wikipedia.org/wiki/HMAC).
+    THe HMAC is created using a key which is a shared secret, and you verify it by running the algorithm yourself with the payload and the key to re-create the HMAC.
+    This verifies that the sender of the message knows the secret key.
+    ## Secret Key
+    You can generate your keys through the developers portal on the Buy Buddy Dashboard. Your keys will remain visible on the dashboard in case you ever loose it.
+    In you suspect that the key might have been compromised, you can revoke it and generate a new key through the dashboard.
+    ## Algorithm
+    The HMAC is created using the HMAC_SHA256 algorithm and then encoded in base 64.
+    The HMAC is placed in to the request in the x-buybuddy-signature header.
+    ```
+    request.Header{"x-buybuddy-signature":  base64Encode(computeHmac256(requestBody, secretKey))}
+    ```
+    ## Verification
+    Verification of a HMAC-SHA256-value is pretty straightforward. Any crypto library in your preferred language would suffice.
+    ### JS/Node example:
+    ```
+    const CryptoJS = require('crypto-js');
+
+    function verifyHmac(
+      receivedHmac, // received in the x-buybuddy-signature request header
+      dataString, // received in request body (stringified JSON)
+      secret // shared secret, known by your service
+    ) {
+        const generatedHmac = CryptoJS.HmacSHA256(dataString, secret);
+        const generatedHmacBase64 = CryptoJS.enc.Base64.stringify(generatedHmac);
+
+        return generatedHmacBase64 === receivedHmac;
+    }
+
+    // test the function
+    const receivedHmac = "sldmlASSLKmdlska1Slsdmkslsdlksdmk3s=";
+    const dataString = '{"foo":1,"bar":2}';
+    const key = "examplekey";
+
+    if (!verifyHmac(receivedHmac, dataString, key)) {
+        throw new Error("HMAC did not authenticate");
+    }
+    ```
+    # Errors
     Buy Buddy API uses conventional HTTP response codes to indicate the success or failure of an API request. In general; Codes in the 2xx range indicate success. Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the 5xx range indicate an error with Stripe's servers (these are rare).
     <!-- ReDoc-Inject: <security-definitions> -->
   version: 1.0.0
