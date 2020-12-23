@@ -88,7 +88,7 @@ info:
         throw new Error("HMAC did not authenticate");
     }
     ```
-  version: 1.0.5
+  version: 1.0.0
   title: Buy Buddy Web Services
   contact:
     email: emir@buybuddy.co
