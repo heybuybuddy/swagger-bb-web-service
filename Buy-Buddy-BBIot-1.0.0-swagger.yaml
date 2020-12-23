@@ -88,7 +88,7 @@ info:
         throw new Error("HMAC did not authenticate");
     }
     ```
-  version: 1.0.0
+  version: 1.0.5
   title: Buy Buddy Web Services
   contact:
     email: emir@buybuddy.co
@@ -139,8 +139,8 @@ paths:
       responses:
         201:
           description: Webhook created
-  /user/sign_in/token : 
-    post: 
+  /user/sign_in/token :
+    post:
       tags:
         - Token
       summary: Create json web token
@@ -152,25 +152,25 @@ paths:
           application/json:
             schema:
               type: object
-              properties: 
-                passphrase: 
+              properties:
+                passphrase:
                   type: integer
-                user_id: 
+                user_id:
                   type: integer
         description: passphrase and user_id
-      responses: 
-        201: 
+      responses:
+        201:
           description: result of the item assignment
-          content: 
-            application/json: 
-              schema: 
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
                   token:
                     type: string
-                example: 
+                example:
                   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiZXhwIjoxNTgxNjA4MTAzLCJpYXQiOjE1ODE2MDA5MDN9.eZs3gHqD6BRK0n458-Vgww8fRanlUvdxriLSkqqz9zQ
-        400: 
+        400:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
@@ -190,7 +190,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     items:
                       $ref: '#/components/schemas/Category'
               
@@ -216,7 +216,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     items:
                       $ref: '#/components/schemas/Tag'
         400:
@@ -241,7 +241,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     items:
                       $ref: '#/components/schemas/Zone'
         400:
@@ -266,7 +266,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     items:
                       $ref: '#/components/schemas/Place'
         400:
@@ -293,7 +293,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     items:
                       $ref: '#/components/schemas/Item'
         400:
@@ -318,7 +318,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     items:
                       $ref: '#/components/schemas/Brand'
         400:
@@ -334,7 +334,7 @@ paths:
       summary: Get retail action
       operationId: merchantRetailAction
       description: |
-        You can fetch all item related retail action information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event. 
+        You can fetch all item related retail action information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event.
       parameters:
         - $ref: '#/components/parameters/PlaceID'
         - $ref: '#/components/parameters/BrandID'
@@ -377,7 +377,7 @@ paths:
       summary: Get hardware status
       operationId: merchantHardwareStatus
       description: |
-        You can fetch all hardware status related information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event. 
+        You can fetch all hardware status related information for your merchant by passing in your hardware type, aggregation functions, time filters, sorting options, limiting options and combination options. Some query filters are not applyible to every event.
       parameters:
         - $ref: '#/components/parameters/PlaceID'
         - $ref: '#/components/parameters/BrandID'
@@ -618,7 +618,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: 
+                  data:
                     type: object
                     properties:
                       hardware:
@@ -728,14 +728,14 @@ components:
       description: The start date of the time frame you want to search your values inbtween.
       schema:
         type: string
-      required: false 
+      required: false
     EndDate:
       in: query
       name: end_date
       description: The end date of the time frame you want to search your values inbetween.
       schema:
         type: string
-      required: false 
+      required: false
     PlaceID:
       in: query
       name: place_id
@@ -744,7 +744,7 @@ components:
         type: array
         items:
           type: integer
-      required: false 
+      required: false
     CategoryID:
       in: query
       name: category_id
@@ -753,7 +753,7 @@ components:
         type: array
         items:
           type: integer
-      required: false 
+      required: false
     TagID:
       in: query
       name: tag_id
@@ -762,7 +762,7 @@ components:
         type: array
         items:
           type: integer
-      required: false 
+      required: false
     ItemID:
       in: query
       name: item_id
@@ -771,7 +771,7 @@ components:
         type: array
         items:
           type: integer
-      required: false 
+      required: false
     StoreID:
       in: query
       name: store_id
@@ -779,7 +779,7 @@ components:
         type: array
         items:
           type: integer
-      required: false 
+      required: false
     ZoneID:
       in: query
       name: zone_id
@@ -788,7 +788,7 @@ components:
         type: array
         items:
           type: integer
-      required: false 
+      required: false
     BrandID:
       in: query
       name: brand_id
@@ -797,7 +797,7 @@ components:
         type: array
         items:
           type: integer
-      required: false 
+      required: false
     UserID:
       in: query
       name: user_id
@@ -806,7 +806,7 @@ components:
         type: array
         items:
           type: integer
-      required: false 
+      required: false
     GroupBy:
       in: query
       name: group_by
@@ -982,16 +982,16 @@ components:
     Interaction:
       type: object
       properties:
-        upc: 
+        upc:
           type: string
-        name: 
+        name:
           type: string
         meta_data:
           type: object
           properties:
             image_url:
               type: string
-        rank: 
+        rank:
           type: integer
         interaction_event:
           type: string
@@ -1000,7 +1000,7 @@ components:
       properties:
         name:
           type: string
-        upc: 
+        upc:
           type: string
         meta_data:
           type: object
@@ -1015,20 +1015,20 @@ components:
         item:
           type: object
           properties:
-            upc: 
+            upc:
               type: string
-            name: 
+            name:
               type: string
         device:
           type: object
           properties:
             identifier:
               type: string
-            type: 
+            type:
               type: string
         user_id:
           type: integer
-        event: 
+        event:
           type: string
     Stock:
       type: object
@@ -1036,9 +1036,9 @@ components:
         item:
           type: object
           properties:
-            upc: 
+            upc:
               type: string
-            name: 
+            name:
               type: string
             aggregation_calculation:
               type: integer
@@ -1049,16 +1049,16 @@ components:
         item:
           type: object
           properties:
-            upc: 
+            upc:
               type: string
-            name: 
+            name:
               type: string
         device:
           type: object
           properties:
             identifier:
               type: string
-            type: 
+            type:
               type: string
         user_id:
           type: integer
@@ -1073,7 +1073,7 @@ components:
           properties:
             identifier:
               type: string
-            type: 
+            type:
               type: string
             status:
               type: string
@@ -1254,7 +1254,7 @@ components:
     EventCallBackResponse:
       type: object
       properties:
-        user_id: 
+        user_id:
           type: string
         event_type:
           type: string
@@ -1263,13 +1263,21 @@ components:
             - picked_up
             - walking
             - abandoned
-        time_stamp: 
-          type: string
         zone:
           type: string
-        device_id: 
+        zone_id:
+          type: integer
+        previous_zone:
           type: string
-        item_barcode: 
+        previous_zone_id:
+          type: integer
+        device_id:
+          type: string
+        item_id:
+          type: integer
+        item_barcode:
+          type: string
+        time_stamp:
           type: string
 tags:
   - name: Token
@@ -1280,7 +1288,7 @@ tags:
   - name: Zone
     description: Zones are specific parts of the places that can represent a category, department or a uniquely named space. The API allows you to fetch all the zones paired with places.
   - name: Place
-    description: Places represent either a store, a warehouse or a uniquely named location assigned to a merchant. The API allows you to fetch all stored places on the Buy Buddy platform. 
+    description: Places represent either a store, a warehouse or a uniquely named location assigned to a merchant. The API allows you to fetch all stored places on the Buy Buddy platform.
   - name: Item
     description: Items represent the specific goods or services you offer to your customers. The API allows you to fetch all the items recorded in the Buy Buddy platform.
   - name: Brand
