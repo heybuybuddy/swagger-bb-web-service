@@ -91,7 +91,10 @@ paths:
                 content:
                   application/json:
                     schema:
-                      $ref: '#/components/schemas/EventCallBackResponse'
+                      type: object
+                      properties:
+                        $ref: '#/components/schemas/EventCallBackResponse'
+                        $ref: '#/components/schemas/SecurityCallBackResponse'
               responses:   # Expected responses to the callback message
                 200:
                   description: Your server returns this code if it accepts the callback
@@ -1210,10 +1213,22 @@ components:
                 $ref: '#/components/schemas/RetailAction'
             total_aggregation_calculation:
               type: integer
-    EventCallBackResponse:
+    SecurityCallBackResponse:
       type: object
       properties:
+        web_hook_id:
+          type: string
         user_id: 
+          type: string
+        store_id: 
+          type: integer
+        store_name: 
+          type: string
+        zone:
+          type: string
+        zone_id:
+          type: integer
+        zone_code:
           type: string
         event_type:
           type: string
@@ -1222,7 +1237,43 @@ components:
             - picked_up
             - walking
             - abandoned
-        time: 
+        time_stamp: 
+          type: string
+        device_id: 
+          type: string
+        item_barcode:
+          type: string
+    EventCallBackResponse:
+      type: object
+      properties:
+        web_hook_id:
+          type: integer
+        user_id: 
+          type: string
+        store_id: 
+          type: integer
+        store_name: 
+          type: string
+        zone_name: 
+          type: string
+        zone_id:
+          type: integer
+        zone_code:
+          type: string
+        previous_zone_name:
+          type: string
+        previous_zone_code:
+          type: string
+        previous_zone_id:
+          type: integer
+        event_type:
+          type: string
+          enum:
+            - browsing
+            - picked_up
+            - walking
+            - abandoned
+        time_stamp: 
           type: string
         zone:
           type: string
@@ -1230,6 +1281,8 @@ components:
           type: string
         item_id: 
           type: integer
+        item_barcode:
+          type: string
 tags:
   - name: Token
   - name: Category
