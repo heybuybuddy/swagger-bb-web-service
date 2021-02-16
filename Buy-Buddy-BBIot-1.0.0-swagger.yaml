@@ -132,10 +132,9 @@ paths:
                 content:
                   application/json:
                     schema:
-                      type: object
-                      properties:
-                        $ref: '#/components/schemas/EventCallBackResponse'
-                        $ref: '#/components/schemas/SecurityCallBackResponse'
+                      oneOf:
+                        - $ref: '#/components/schemas/EventCallBackResponse'
+                        - $ref: '#/components/schemas/SecurityCallBackResponse'
               responses:   # Expected responses to the callback message
                 200:
                   description: Your server returns this code if it accepts the callback
@@ -1287,13 +1286,9 @@ components:
     EventCallBackResponse:
       type: object
       properties:
-<<<<<<< HEAD
         web_hook_id:
-          type: integer
+          type: string
         user_id: 
-=======
-        user_id:
->>>>>>> 84cbedfb4e3efe2788038f4003fa6e23bd228030
           type: string
         store_id: 
           type: integer
@@ -1318,23 +1313,6 @@ components:
             - picked_up
             - walking
             - abandoned
-<<<<<<< HEAD
-        time_stamp: 
-          type: string
-=======
->>>>>>> 84cbedfb4e3efe2788038f4003fa6e23bd228030
-        zone:
-          type: string
-        zone_id:
-          type: integer
-        previous_zone:
-          type: string
-        previous_zone_id:
-          type: integer
-<<<<<<< HEAD
-        item_barcode:
-          type: string
-=======
         device_id:
           type: string
         item_id:
@@ -1343,7 +1321,6 @@ components:
           type: string
         time_stamp:
           type: string
->>>>>>> 84cbedfb4e3efe2788038f4003fa6e23bd228030
 tags:
   - name: Token
   - name: Category
