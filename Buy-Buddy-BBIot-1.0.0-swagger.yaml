@@ -1264,7 +1264,7 @@ components:
           type: integer
         store_name: 
           type: string
-        zone:
+        zone_name:
           type: string
         zone_id:
           type: integer
