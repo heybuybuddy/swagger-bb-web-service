@@ -714,7 +714,6 @@ components:
         type: string
         enum:
           - picked_up
-          - bounce
           - browsing
           - walking
           - abandoned
