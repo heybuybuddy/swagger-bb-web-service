@@ -1272,10 +1272,8 @@ components:
         event_type:
           type: string
           enum:
-            - browsing
-            - picked_up
-            - walking
-            - abandoned
+            - alarming
+            - leaving
         time_stamp: 
           type: string
         device_id: 
