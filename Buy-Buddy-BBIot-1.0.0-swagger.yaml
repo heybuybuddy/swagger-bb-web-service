@@ -122,12 +122,17 @@ paths:
                   example: [interaction, security]
               required:
                 - callbackUrl
+      responses:
+        201:
+          description: Webhook created
+          
       callbacks:   # Callback definition
         interactionEvent:   # Event name
           '{$request.body#/callbackUrl}':   # The callback URL,
                                             # Refers to the passed URL
             post:
               requestBody:   # Contents of the callback message
+                description: subscription payload
                 required: true
                 content:
                   application/json:
@@ -138,9 +143,6 @@ paths:
               responses:   # Expected responses to the callback message
                 200:
                   description: Your server returns this code if it accepts the callback
-      responses:
-        201:
-          description: Webhook created
   /user/sign_in/token :
     post:
       tags:
@@ -1257,11 +1259,11 @@ components:
       properties:
         web_hook_id:
           type: string
-        user_id: 
+        user_id:
           type: string
-        store_id: 
+        store_id:
           type: integer
-        store_name: 
+        store_name:
           type: string
         zone_name:
           type: string
@@ -1274,9 +1276,9 @@ components:
           enum:
             - alarming
             - leaving
-        time_stamp: 
+        time_stamp:
           type: string
-        device_id: 
+        device_id:
           type: string
         item_barcode:
           type: string
@@ -1285,13 +1287,13 @@ components:
       properties:
         web_hook_id:
           type: string
-        user_id: 
+        user_id:
           type: string
-        store_id: 
+        store_id:
           type: integer
-        store_name: 
+        store_name:
           type: string
-        zone_name: 
+        zone_name:
           type: string
         zone_id:
           type: integer
