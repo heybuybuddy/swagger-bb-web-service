@@ -158,10 +158,10 @@ paths:
               type: object
               properties:
                 token:
-                  type: integer
+                  type: string
                   description: Merchant token provided by Buy Buddy
                 ext_id:
-                  type: integer
+                  type: string
                   description: User id representation on thrid party api
                 user_type:
                   type: integer
