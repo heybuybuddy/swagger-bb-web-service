@@ -143,13 +143,13 @@ paths:
               responses:   # Expected responses to the callback message
                 200:
                   description: Your server returns this code if it accepts the callback
-  /user/sign_in/token :
+  /user/third_party/sign_in :
     post:
       tags:
-        - Token
-      summary: Create json web token
-      operationId: token
-      description: Create a json web token using the passphrase provided on the dashboard.
+        - Sign In
+      summary: Sign in new user with api token
+      operationId: sign_in
+      description: You can fetch a user token using you merchant token. If the user does not exist a new one will be created.
       requestBody:
         required: true
         content:
@@ -157,14 +157,19 @@ paths:
             schema:
               type: object
               properties:
-                passphrase:
+                token:
                   type: integer
-                user_id:
+                  description: Merchant token provided by Buy Buddy
+                ext_id:
                   type: integer
-        description: passphrase and user_id
+                  description: User id representation on thrid party api
+                user_type:
+                  type: integer
+                  description: User type value. Values should be 2 for customer and 3 fo store associate
+     
       responses:
         201:
-          description: result of the item assignment
+          description: The user token response.
           content:
             application/json:
               schema:
@@ -1259,11 +1264,11 @@ components:
       properties:
         web_hook_id:
           type: string
-        user_id:
+        user_id: 
           type: string
-        store_id:
+        store_id: 
           type: integer
-        store_name:
+        store_name: 
           type: string
         zone_name:
           type: string
@@ -1276,9 +1281,9 @@ components:
           enum:
             - alarming
             - leaving
-        time_stamp:
+        time_stamp: 
           type: string
-        device_id:
+        device_id: 
           type: string
         item_barcode:
           type: string
@@ -1287,13 +1292,13 @@ components:
       properties:
         web_hook_id:
           type: string
-        user_id:
+        user_id: 
           type: string
-        store_id:
+        store_id: 
           type: integer
-        store_name:
+        store_name: 
           type: string
-        zone_name:
+        zone_name: 
           type: string
         zone_id:
           type: integer
