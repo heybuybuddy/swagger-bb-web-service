@@ -1326,7 +1326,8 @@ components:
         time_stamp:
           type: string
 tags:
-  - name: Token
+  - name: Sign In
+    description: Third parties apps can sign in their users using the merchant token provided by Buy Buddy.
   - name: Category
     description: Categories are groups of products that meet similar needs. The API allows you to fetch all of the categories paired to your items.
   - name: Tag
