@@ -178,7 +178,11 @@ paths:
                   token:
                     type: string
                 example:
-                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiZXhwIjoxNTgxNjA4MTAzLCJpYXQiOjE1ODE2MDA5MDN9.eZs3gHqD6BRK0n458-Vgww8fRanlUvdxriLSkqqz9zQ
+                  user_id: 1004,
+                  merchant_id: 3,
+                  merchant: Browns
+                  passphrase: GHcFgVyvTKOa2/2upMV/ib
+
         400:
           $ref: '#/components/responses/BadRequest'
         401:
