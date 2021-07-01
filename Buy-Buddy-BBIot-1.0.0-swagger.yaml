@@ -160,7 +160,7 @@ paths:
                 token:
                   type: string
                   description: Merchant token provided by Buy Buddy
-                ext_id:
+                user_id:
                   type: string
                   description: User id representation on thrid party api
                 user_type:
