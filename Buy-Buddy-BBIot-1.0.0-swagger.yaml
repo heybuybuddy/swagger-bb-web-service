@@ -158,10 +158,10 @@ paths:
               type: object
               properties:
                 token:
-                  type: string
+                  type: integer
                   description: Merchant token provided by Buy Buddy
-                user_id:
-                  type: string
+                ext_id:
+                  type: integer
                   description: User id representation on thrid party api
                 user_type:
                   type: integer
@@ -178,11 +178,7 @@ paths:
                   token:
                     type: string
                 example:
-                  user_id: 1004,
-                  merchant_id: 3,
-                  merchant: Browns
-                  passphrase: GHcFgVyvTKOa2/2upMV/ib
-
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiZXhwIjoxNTgxNjA4MTAzLCJpYXQiOjE1ODE2MDA5MDN9.eZs3gHqD6BRK0n458-Vgww8fRanlUvdxriLSkqqz9zQ
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -1298,6 +1294,11 @@ components:
           type: string
         user_id: 
           type: string
+        user_type:
+          type: string
+          enum:
+            - store_associate
+            - customer
         store_id: 
           type: integer
         store_name: 
@@ -1330,8 +1331,7 @@ components:
         time_stamp:
           type: string
 tags:
-  - name: Sign In
-    description: Third party apps can sign in their users using the merchant token provided by Buy Buddy.
+  - name: Token
   - name: Category
     description: Categories are groups of products that meet similar needs. The API allows you to fetch all of the categories paired to your items.
   - name: Tag
