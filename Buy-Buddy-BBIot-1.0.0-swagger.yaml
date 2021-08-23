@@ -17,16 +17,16 @@ info:
     ### Credentials
     The credentials artifact is a form of "username" and a matching "password" which identifies the user.
     It is required as the first step of authenticating to the platform.
-    Submission of credentials to the platform will grant a access token token in return for further interaction with the system.
+    Submission of credentials to the platform will grant an access token in return for further interaction with the system.
     ### API Token
     The api token artifact is the first step of authenticating on to the server in the same way the credential is. 
     It is explicitly to be used by third party apps. It persists until it is refreshed or as long as the holder has access to the platform dashboard.
-    Submission of the api token to the platform will grant a access token token in return just as the credentials do.
+    Submission of the api token to the platform will grant an access token in return just as the credentials do.
     ### Access Token
     This artifact provides an ability to grant access on the server.
-    The access token token is assigned after the initial submission of the user credentials or the api token.
+    The access token is assigned after the initial submission of the user credentials or the api token.
     It has a long expiration duration of six months and it could be stored on a device, possibly using secure persistence mechanisms (i.e. keychain).
-    A valid access token token will be adequate to grant access to a user.
+    A valid access token will be adequate to grant access to a user.
     # Authorization
     Authorization policies determine whether a user is allowed to perform a given action within the platform. This allows platform administrators to use the existing policies to control who has various access levels to the platform itself. Note that authorization is a separate step from authentication, which is more about determining the identity of who is taking the action.
     ## Authorization Management
