@@ -17,19 +17,16 @@ info:
     ### Credentials
     The credentials artifact is a form of "username" and a matching "password" which identifies the user.
     It is required as the first step of authenticating to the platform.
-    Submission of credentials to the platform will grant a passphrase in return for further interaction with the system.
-    ### Passphrase
+    Submission of credentials to the platform will grant a session token in return for further interaction with the system.
+    ### API Token
+    The api token artifact is the first step of authenticating on to the server in the same way the credential is. 
+    It is explicitly to be used by third party apps. It persists until it is refreshed or as long as the holder has access to the platform dashboard.
+    Submission of the api token to the platform will grant a session token in return just as the credentials do.
+    ### Session Token
     This artifact provides an ability to grant access on the server.
-    The passphrase is assigned after the initial submission of the user credentials.
+    The session token is assigned after the initial submission of the user credentials or the api token.
     It has a long expiration duration of six months and it could be stored on a device, possibly using secure persistence mechanisms (i.e. keychain).
-    A valid passphrase will be adequate to grant access to a user.
-    ### JSON Web Token (RFC 7519)
-    Contains user data signed off by the platform authority, which provides stateless authentication.
-    In many circumstances, the payload of this artifact could be read by client application, but not mutated.
-    In case of mutation, it will invalidate itself, since signature is no longer valid.
-    It has a valid duration of 15 minutes, after the duration has passed, it will invalidate itself.
-    #### Renewal
-    The JSON Web Token (JWT) will be renewed automatically after its duration ends if a valid passphrase is available. In case of both the passphrase and JWT are unavailable the user will have to authenticate using their credentials once more and obtain a new passphrase and use it to retrieve a new JWT.
+    A valid session token will be adequate to grant access to a user.
     # Authorization
     Authorization policies determine whether a user is allowed to perform a given action within the platform. This allows platform administrators to use the existing policies to control who has various access levels to the platform itself. Note that authorization is a separate step from authentication, which is more about determining the identity of who is taking the action.
     ## Authorization Management
@@ -147,9 +144,9 @@ paths:
     post:
       tags:
         - Sign In
-      summary: Sign in new user with api token
+      summary: Sign in or create a user with an api token
       operationId: sign_in
-      description: You can fetch a user token using you merchant token. If the user does not exist a new one will be created.
+      description: You can fetch a session token using an api token. If the user does not exist a new one will be created.
       requestBody:
         required: true
         content:
@@ -166,6 +163,9 @@ paths:
                 user_type:
                   type: integer
                   description: User type value. Values should be 2 for customer and 3 fo store associate
+                device_id:
+                  type: string
+                  description: Unique identifier for the current user device.
      
       responses:
         201:
@@ -175,10 +175,19 @@ paths:
               schema:
                 type: object
                 properties:
-                  token:
+                  session_token:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  merchant:
+                    type: string
+                  user_id:
                     type: string
                 example:
-                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiZXhwIjoxNTgxNjA4MTAzLCJpYXQiOjE1ODE2MDA5MDN9.eZs3gHqD6BRK0n458-Vgww8fRanlUvdxriLSkqqz9zQ
+                  session_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiZXhwIjoxNTgxNjA4MTAzLCJpYXQiOjE1ODE2MDA5MDN9.eZs3gHqD6BRK0n458-Vgww8fRanlUvdxriLSkqqz9zQ
+                  merchant_id: 3
+                  merchant: FarFetch
+                  user_id: 1234321
         400:
           $ref: '#/components/responses/BadRequest'
         401:
