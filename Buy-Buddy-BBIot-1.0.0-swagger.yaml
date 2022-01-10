@@ -17,16 +17,19 @@ info:
     ### Credentials
     The credentials artifact is a form of "username" and a matching "password" which identifies the user.
     It is required as the first step of authenticating to the platform.
-    Submission of credentials to the platform will grant an access token in return for further interaction with the system.
-    ### API Token
-    The api token artifact is the first step of authenticating on to the server in the same way the credential is. 
-    It is explicitly to be used by third party apps. It persists until it is refreshed or as long as the holder has access to the platform dashboard.
-    Submission of the api token to the platform will grant an access token in return just as the credentials do.
-    ### Access Token
+    Submission of credentials to the platform will grant a passphrase in return for further interaction with the system.
+    ### Passphrase
     This artifact provides an ability to grant access on the server.
-    The access token is assigned after the initial submission of the user credentials or the api token.
+    The passphrase is assigned after the initial submission of the user credentials.
     It has a long expiration duration of six months and it could be stored on a device, possibly using secure persistence mechanisms (i.e. keychain).
-    A valid access token will be adequate to grant access to a user.
+    A valid passphrase will be adequate to grant access to a user.
+    ### JSON Web Token (RFC 7519)
+    Contains user data signed off by the platform authority, which provides stateless authentication.
+    In many circumstances, the payload of this artifact could be read by client application, but not mutated.
+    In case of mutation, it will invalidate itself, since signature is no longer valid.
+    It has a valid duration of 15 minutes, after the duration has passed, it will invalidate itself.
+    #### Renewal
+    The JSON Web Token (JWT) will be renewed automatically after its duration ends if a valid passphrase is available. In case of both the passphrase and JWT are unavailable the user will have to authenticate using their credentials once more and obtain a new passphrase and use it to retrieve a new JWT.
     # Authorization
     Authorization policies determine whether a user is allowed to perform a given action within the platform. This allows platform administrators to use the existing policies to control who has various access levels to the platform itself. Note that authorization is a separate step from authentication, which is more about determining the identity of who is taking the action.
     ## Authorization Management
@@ -144,9 +147,9 @@ paths:
     post:
       tags:
         - Sign In
-      summary: Sign in or create a user with an api token
+      summary: Sign in new user with api token
       operationId: sign_in
-      description: You can fetch a access token token using an api token. If the user does not exist a new one will be created.
+      description: You can fetch a user token using you merchant token. If the user does not exist a new one will be created.
       requestBody:
         required: true
         content:
@@ -155,17 +158,14 @@ paths:
               type: object
               properties:
                 token:
-                  type: string
+                  type: integer
                   description: Merchant token provided by Buy Buddy
-                user_id:
-                  type: string
+                ext_id:
+                  type: integer
                   description: User id representation on thrid party api
                 user_type:
                   type: integer
                   description: User type value. Values should be 2 for customer and 3 fo store associate
-                device_id:
-                  type: string
-                  description: Unique identifier for the current user device.
      
       responses:
         201:
@@ -175,23 +175,147 @@ paths:
               schema:
                 type: object
                 properties:
-                  access_token:
-                    type: string
-                  merchant_id:
-                    type: integer
-                  merchant:
-                    type: string
-                  user_id:
+                  token:
                     type: string
                 example:
-                  access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiZXhwIjoxNTgxNjA4MTAzLCJpYXQiOjE1ODE2MDA5MDN9.eZs3gHqD6BRK0n458-Vgww8fRanlUvdxriLSkqqz9zQ
-                  merchant_id: 3
-                  merchant: FarFetch
-                  user_id: 1234321
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiZXhwIjoxNTgxNjA4MTAzLCJpYXQiOjE1ODE2MDA5MDN9.eZs3gHqD6BRK0n458-Vgww8fRanlUvdxriLSkqqz9zQ
         400:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+  /opm/alarm_live:
+    get:
+      tags:
+        - Live Alarm
+      summary: Get current tags by zone
+      operationId: opmAlarmLive
+      description: |
+        You can fetch all tags grouped by zones.
+      responses:
+        200:
+          description: result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/AlarmLive'
+                      
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+  /device/alarm_history:
+    get:
+      tags:
+        - Device Alarm History
+      summary: Get device alarm history
+      operationId: deviceAlarmHistory
+      description: |
+        You can fetch the alarm history of your devices.
+      parameters:
+        - $ref: '#/components/parameters/StartDate'
+        - $ref: '#/components/parameters/EndDate'
+      responses:
+        200:
+          description: result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlarmHistory'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+  /opm/item_stock:
+    get:
+      tags:
+        - Item Stock
+      summary: Get item stock
+      operationId: opmItemStock
+      description: |
+        You can fetch all stock data for items.
+      responses:
+        200:
+          description: result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ItemStock'
+                      
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+  /merchant/item_assignment:
+    get:
+      tags:
+        - Item Assignment
+      summary: Get item assignments
+      operationId: merchantItemAssignment
+      description: |
+        You can fetch all items assigned to you tags.
+      parameters:
+        - $ref: '#/components/parameters/Identifier'
+        - $ref: '#/components/parameters/UPC'
+        
+      responses:
+        200:
+          description: result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemAssignment'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+  /merchant/store/device:
+    get:
+      tags:
+        - Store Device
+      summary: Get tags
+      operationId: merchantStoreDevice
+      description: |
+        You can fetch the number of devices assigned to you stores. You can get all the devices individually or grouped under store names.
+      parameters:
+        - $ref: '#/components/parameters/Identifier'
+        - $ref: '#/components/parameters/StartDate'
+        - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/GroupByStore'
+      responses:
+        200:
+          description: result
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/StoreGroupResponse'
+                  - $ref: '#/components/schemas/DeviceGroupResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
   /category:
     get:
       tags:
@@ -733,6 +857,18 @@ components:
           - browsing
           - walking
           - abandoned
+    Identifier:
+      in: query
+      name: identifier
+      description: Specify the barcode of tags to fetch.
+      schema:
+        type: string
+    UPC:
+      in: query
+      name: upc
+      description: Specify the barcode of items to fetch.
+      schema:
+        type: string
     ItemBarcode:
       in: query
       name: item_barcode
@@ -824,6 +960,13 @@ components:
         items:
           type: integer
       required: false
+    GroupByStore:
+      in: query
+      name: group_by_store
+      schema:
+        type: string
+        enum:
+          - store
     GroupBy:
       in: query
       name: group_by
@@ -966,6 +1109,153 @@ components:
           type: string
         updated_at:
           type: string
+    AlarmLive:
+      type: object
+      properties:
+        source_device_id:
+          type: integer
+        device_id: 
+          type: integer
+        item_id: 
+          type: integer
+        zone_id:
+          type: integer
+        store_id:
+          type: integer
+        state_id:
+          type: integer
+        merchant_id:
+          type: integer
+        zone_type_id:
+          type: integer
+        zone_name:
+          type: string
+        identifier:
+          type: string
+        inserted_id:
+          type: string
+        brand_name: 
+          type: string
+        meta_data:
+          type: object
+          properties:
+            image_url:
+              type: string
+            gender:
+              type: string
+        operation_time:
+          type: integer
+        sku:
+          type: string
+        upc:
+          type: string
+        state_name:
+          type: string
+    ItemStock:
+      type: object
+      properties:
+        item_id:
+          type: integer
+        item_name:
+          type: string
+        store_id:
+          type: integer
+        store_name:
+          type: string
+        count: 
+          type: integer
+        states:
+          type: object
+          properties:
+            state_id:
+              type: integer
+            state_name:
+              type: string
+            count:
+              type: integer
+        missing_count:
+          type: integer
+        sku:
+          type: string
+        upc:
+          type: string
+        brand_id:
+          type: integer
+        brand_name:
+          type: string
+        meta_data:
+          type: object
+          properties:
+            gender:
+              type: string
+            image_url:
+              type: string
+        inserted_at:
+          type: string
+        wws_count:
+          type: integer
+        stock_5:
+          type: integer
+        stock_6: 
+          type: integer
+        stock_9:
+          type: integer
+    AlarmHistory:
+      type: object
+      properties:
+        device_identifier:
+          type: string
+        item_name:
+          type: string
+        sku:
+          type: string
+        upc:
+          type: string
+        device_alarm_date:
+          type: string
+        state_id:
+          type: integer
+        alarm_zone:
+          type: string
+        current_zone:
+          type: string
+        last_seen:
+          type: string
+        state:
+          type: string
+        device_id:
+          type: integer
+        scanner_id:
+          type: integer
+        alarm_history_id:
+          type: integer
+        meta_data:
+          type: object
+          properties:
+            image_url:
+              type: string
+    ItemAssignment:
+      type: object
+      properties:
+        item_id:
+          type: integer
+        item_name:
+          type: string
+        upc: 
+          type: string
+        state:
+          type: string
+        meta_data:
+          type: object
+          properties:
+            gender:
+              type: string
+            image_url:
+              type: string
+            device_id:
+              type: integer
+            identifier:
+              type: string
     Item:
       type: object
       properties:
@@ -1115,6 +1405,42 @@ components:
           type: string
         aggregation_calculation:
           type: integer
+    DeviceStoreGroupPartition:
+      type: object
+      properties:
+        store_id:
+          type: integer
+        store_name: 
+          type: string
+        store_type:
+          type: string
+        inserted_at:
+          type: string
+        device_count:
+          type: integer
+    DeviceGroupPartition:
+      type: object
+      properties:
+        merchant_assignment_id:
+          type: integer
+        device_id:
+          type: integer
+        merchant_id: 
+          type: integer
+        identifier:
+          type: string
+        device_inserted_at:
+          type: string
+        store_id:
+          type: integer
+        assignment_id:
+          type: integer
+        store_name:
+          type: string
+        store_type:
+          type: string
+        store_inserted_at:
+          type: string
     ZonePartition:
       type: object
       properties:
@@ -1180,6 +1506,18 @@ components:
                 $ref: '#/components/schemas/BrandPartition'
             total_aggregation_calculation:
               type: integer
+    DeviceGroupResponse:
+      type: object
+      properties:
+        device_array:
+         items:
+            $ref: '#/components/schemas/DeviceGroupPartition'
+        device_count:
+          type: integer
+    StoreGroupResponse:
+      type: array
+      items:
+          $ref: '#/components/schemas/DeviceStoreGroupPartition'
     HardwareStatusResponse:
       type: object
       properties:
