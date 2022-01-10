@@ -183,6 +183,27 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+  /merchant/store/scanner:
+    get:
+      tags:
+        - Scanner
+      summary: Get scanners
+      operationId: merchantStoreScanner
+      description: |
+        You can fetch the number of scanners assigned to you stores. You can get all the scanners individually.
+      responses:
+        200:
+          description: result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScannerGroupResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
   /opm/alarm_live:
     get:
       tags:
@@ -1418,6 +1439,21 @@ components:
           type: string
         device_count:
           type: integer
+    ScannerGroupPartition:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        store_id:
+          type: integer
+        zone_name:
+          type: string
+        status:
+          type: string
+        last_reading_time:
+          type: string
     DeviceGroupPartition:
       type: object
       properties:
@@ -1506,6 +1542,18 @@ components:
                 $ref: '#/components/schemas/BrandPartition'
             total_aggregation_calculation:
               type: integer
+    ScannerGroupResponse:
+      type: object
+      properties:
+        scanner_array:
+         items:
+            $ref: '#/components/schemas/ScannerGroupPartition'
+        total_scanner_count:
+          type: integer
+        online_scanner_count:
+          type: integer
+        offline_scanner_count:
+          type: integer
     DeviceGroupResponse:
       type: object
       properties:
