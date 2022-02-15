@@ -215,6 +215,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Identifier'
         - $ref: '#/components/parameters/UPC'
+        - $ref: '#/components/parameters/StateID'
       responses:
         200:
           description: result
@@ -887,6 +888,13 @@ components:
       description: Specify the barcode of tags to fetch.
       schema:
         type: string
+    StateID:
+      in: query
+      name: state
+      description: Specify the state of the tag to fetch.
+      schema:
+        type: string
+        enum: [active, missing, alarmed, deactive]
     UPC:
       in: query
       name: upc
