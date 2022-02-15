@@ -212,6 +212,9 @@ paths:
       operationId: opmAlarmLive
       description: |
         You can fetch all tags grouped by zones.
+      parameters:
+        - $ref: '#/components/parameters/Identifier'
+        - $ref: '#/components/parameters/UPC'
       responses:
         200:
           description: result
