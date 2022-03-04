@@ -191,6 +191,10 @@ paths:
       operationId: merchantStoreScanner
       description: |
         You can fetch the number of scanners assigned to you stores. You can get all the scanners individually.
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+
       responses:
         200:
           description: result
@@ -216,6 +220,9 @@ paths:
         - $ref: '#/components/parameters/Identifier'
         - $ref: '#/components/parameters/UPC'
         - $ref: '#/components/parameters/StateID'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+
       responses:
         200:
           description: result
@@ -245,6 +252,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+
       responses:
         200:
           description: result
@@ -268,6 +278,10 @@ paths:
       operationId: opmItemStock
       description: |
         You can fetch all stock data for items.
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+
       responses:
         200:
           description: result
@@ -297,6 +311,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Identifier'
         - $ref: '#/components/parameters/UPC'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+
         
       responses:
         200:
@@ -326,6 +343,9 @@ paths:
         - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/GroupByStore'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+
       responses:
         200:
           description: result
@@ -992,6 +1012,16 @@ components:
         items:
           type: integer
       required: false
+    Page:
+      in: query
+      name: page
+      schema:
+        type: string
+    PageSize:
+      in: query
+      name: page_size
+      schema:
+        type: string
     GroupByStore:
       in: query
       name: group_by_store
