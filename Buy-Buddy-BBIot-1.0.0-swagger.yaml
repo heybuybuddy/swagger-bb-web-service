@@ -96,6 +96,35 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 paths:
+  /display/image:
+    get:
+      tags:
+        - Image Fetch
+      summary: Get display images
+      operationId: displayImageFetch
+      description: |
+        You can fetch the images for all your displays.
+      parameters:
+        - $ref: '#/components/parameters/StartDate'
+        - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/DisplayIdentifier'
+        - $ref: '#/components/parameters/PlaceID'
+
+      responses:
+        200:
+          description: result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlaceImage'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
   /webhook/subscribe:
     post:
       tags:
@@ -419,7 +448,7 @@ paths:
       summary: Get zones
       operationId: merchantZone
       description: |
-        Fetch a list containing all of the places.
+        Fetch a list containing all of the zones.
       responses:
         200:
           description: result
@@ -941,6 +970,15 @@ components:
       schema:
         type: string
       required: false
+    DisplayIdentifier:
+      in: query
+      name: display_identifier
+      description: Specify the barcode of displays to fetch.
+      schema:
+        type: array
+        items:
+          type: string
+      required: false
     PlaceID:
       in: query
       name: place_id
@@ -1296,6 +1334,27 @@ components:
           properties:
             image_url:
               type: string
+    PlaceImage:
+      type: object
+      properties:
+        display_identifier:
+          type: string
+        place:
+          type: string
+        image_info:
+          type: array
+          items:
+            type: object
+            properties:
+              user_name:
+                type: string
+              image_id:
+                type: integer
+              image_url:
+                type: string
+              inserted_at:
+                type: string 
+            
     ItemAssignment:
       type: object
       properties:
@@ -1768,31 +1827,34 @@ components:
           type: string
 tags:
   - name: Token
-  - name: Category
-    description: Categories are groups of products that meet similar needs. The API allows you to fetch all of the categories paired to your items.
-  - name: Tag
-    description: Tags represent the features of your items. Tags make it easier to pinpoint items for specific analytic search cases. The API allows you to fetch all the tags described on the Buy Buddy platform.
-  - name: Zone
-    description: Zones are specific parts of the places that can represent a category, department or a uniquely named space. The API allows you to fetch all the zones paired with places.
+    description: A JSON Web Token.
   - name: Place
-    description: Places represent either a store, a warehouse or a uniquely named location assigned to a merchant. The API allows you to fetch all stored places on the Buy Buddy platform.
+    description: Places represent stores, warehouses, or uniquely named locations assigned to a merchant. Fetch all stored places on the Buy Buddy platform.
   - name: Item
-    description: Items represent the specific goods or services you offer to your customers. The API allows you to fetch all the items recorded in the Buy Buddy platform.
+    description: Items represent specific goods or services offered to customers. Fetch all items recorded in the Buy Buddy platform.
+  - name: Category
+    description: Categories are groups of products that meet similar needs. Fetch all categories paired to your items.
+  - name: Tag
+    description: Tags represent the features of your items, aiding specific analytic search cases. Fetch all tags on the Buy Buddy platform.
   - name: Brand
-    description: Brands are types of products manufactured by particular companies under a particular name. The API allows you to fetch all the brands paired to the items.
-  - name: Retail Action
-    description: Retail actions represent all of the operations done on items and Buy Buddy devices such as pairing, transfering, silencing, etc. The API allows you to fetch all the actions done on items or devices.
-  - name: Hardware Status
-    description: Hardware status describes all of the states the Buy Buddy devices go through throughout their lifecycles. These states include both production stage and in store usage stages. The API allows you to fetch all the states of the hardware devices.
-  - name: Insight
-    description: Insight is gained by analyzing the data and information collected by the Buy Buddy devices to better understand customer behaviour and enables you to make better desicions for certain situations. The API allows you to fetch all business insights collected by Buy Buddy Devices.
-  - name: Security Event
-    description: Security events represent all of the security states of the Buy Buddy devices. Such as alarmed, missing, active, ect.
-  - name: Interaction Event
-    description: Interaction events represent all customer interactions made with Buy Buddy devices. The API allows you to fetch all interactions made with the devices and also the detailed information of these interacions.
+    description: Brands are types of products manufactured by particular companies under a specific name. Fetch all brands paired with items.
   - name: Stock
-    description: Stock represents your merchandise kept on the premises of a shop or warehouse and available for sale or distribution. You can fetch your stock numbers on the condition that they are paierd with a Buy Buddy device.
+    description: Stock represents merchandise kept on premises for sale or distribution, paired with Buy Buddy devices. Fetch stock numbers.
   - name: Hardware
-    description: Hardware describes all of the devices used in your store. Currently only two types of hardware exists which are the tags and the scanners. The API allows you to fetch all hardware objects assigned to you merchant.
+    description: Hardware describes devices used in stores, including tags and scanners. Fetch all hardware objects assigned to your merchant.
+  - name: Image Fetch
+    description: Fetch the images for all your displays.
+  - name: Retail Action
+    description: Retail actions represent operations done on items and Buy Buddy devices (e.g., pairing, transferring). Fetch all actions done on items or devices.
+  - name: Hardware Status
+    description: Hardware status describes all states Buy Buddy devices go through, from production to in-store usage stages. Fetch all hardware device states.
+  - name: Insight
+    description: Insights are gained by analyzing data collected by Buy Buddy devices to understand customer behavior and make informed decisions. Fetch all business insights collected by Buy Buddy Devices.
+  - name: Security Event
+    description: Security events represent all security states of Buy Buddy devices (e.g., alarmed, missing, active). Fetch all security events.
+  - name: Interaction Event
+    description: Interaction events represent customer interactions with Buy Buddy devices. Fetch all interactions and detailed information.
+  - name: Zone
+    description: Zones are specific parts of places representing categories, departments, or uniquely named spaces. Fetch all zones paired with places.
   - name: Webhook
-    description: You can subscribe to webhook endpoints via the API to be notified about certain events.
+    description: Subscribe to webhook endpoints via the API to be notified about specific event.
