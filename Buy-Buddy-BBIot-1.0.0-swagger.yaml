@@ -96,6 +96,33 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 paths:
+  /display/grid:
+    get:
+      tags:
+        - Grid Fetch
+      summary: Get display grid
+      operationId: displayGridFetch
+      description: |
+        You can fetch the grids for all your displays.
+      parameters:
+        - $ref: '#/components/parameters/DisplayIdentifier'
+        - $ref: '#/components/parameters/PlaceID'
+
+      responses:
+        200:
+          description: result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductPlacement'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
   /display/image:
     get:
       tags:
@@ -1334,6 +1361,36 @@ components:
           properties:
             image_url:
               type: string
+    ProductPlacement:
+      type: object
+      properties:
+        display_identifier:
+          type: string
+        row_count:
+          type: integer
+        column_count:
+          type: integer
+        product_placements:
+          type: array
+          items:
+            type: object
+            properties:
+              assignment_id:
+                type: integer
+              upc:
+                type: string
+              item_name:
+                type: string
+              user_name:
+                type: string
+              row_position:
+                type: integer
+              column_position:
+                type: integer
+              front_view:
+                type: boolean
+              item_count:
+                type: integer
     PlaceImage:
       type: object
       properties:
@@ -1842,6 +1899,8 @@ tags:
     description: Stock represents merchandise kept on premises for sale or distribution, paired with Buy Buddy devices. Fetch stock numbers.
   - name: Hardware
     description: Hardware describes devices used in stores, including tags and scanners. Fetch all hardware objects assigned to your merchant.
+  - name: Grid Fetch
+    description: Fetch the grids for all your displays.
   - name: Image Fetch
     description: Fetch the images for all your displays.
   - name: Retail Action
