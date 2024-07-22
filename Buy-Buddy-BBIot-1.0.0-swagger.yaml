@@ -1919,6 +1919,10 @@ components:
 tags:
   - name: Token
     description: An Acess Token is necessary for every request to our api. It is refreshed using the refresh token provided from the Buy Buddy dashboard. You can find you api refresh token at https://dashboard.buybuddy.co/settings/developer.
+  - name: Grid Fetch
+    description: Fetch the grids for all your displays.
+  - name: Image Fetch
+    description: Fetch the images for all your displays.
   - name: Place
     description: Places represent stores, warehouses, or uniquely named locations assigned to a merchant. Fetch all stored places on the Buy Buddy platform.
   - name: Item
@@ -1933,10 +1937,6 @@ tags:
     description: Stock represents merchandise kept on premises for sale or distribution, paired with Buy Buddy devices. Fetch stock numbers.
   - name: Hardware
     description: Hardware describes devices used in stores, including tags and scanners. Fetch all hardware objects assigned to your merchant.
-  - name: Grid Fetch
-    description: Fetch the grids for all your displays.
-  - name: Image Fetch
-    description: Fetch the images for all your displays.
   - name: Retail Action
     description: Retail actions represent operations done on items and Buy Buddy devices (e.g., pairing, transferring). Fetch all actions done on items or devices.
   - name: Hardware Status
