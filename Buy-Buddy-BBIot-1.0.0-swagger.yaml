@@ -96,6 +96,40 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 paths:
+  /user/sign_in/token:
+    post:
+      tags:
+        - Token
+      summary: Fetch access token
+      operationId: accessTokenFetch
+      description: |
+        You can fetch an access token using a refresh token. This access token should be included in the request as a 'Bearer Token' in the 'Authorization' header.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                passphrase:
+                  type: string
+                  description: Merchant token provided by Buy Buddy
+      responses:
+        201:
+          description: The user token response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                example:
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2MDU5LCJtZXJjaGFudF9pZCI6NTYsInBlcm1pc3Npb25fc2V0X2lkIjoxLCJtZXJjaGFudF91aV9wZXJtaXNzaW9uIjp7ImNhbkNyZWF0ZVNtYXJ0QXJlYSI6ZmFsc2UsImNhbkVkaXRBcmVhSXRlbSI6ZmFsc2V9LCJzdG9yZV9pZCI6WzExNzMsMTE3MSwxMTc1LDExNzYsMTE3NCwxMTc3LDExNzJdLCJzdG9yZXMiOnsiMTE3MSI6IkRvbGxhciBHZW5lcmFsIiwiMTE3MiI6IldhbG1hcnQiLCIxMTczIjoiQWNlIEhhcmR3YXJlIFNpZXJyYSBWaXN0YSIsIjExNzQiOiJMaXR0bGUgQ2Vhc2VycyIsIjExNzUiOiJEb2xsYXIgVHJlZSIsIjExNzYiOiJGcnkncyBGb29kIFx1MDAyNiBEcnVnIiwiMTE3NyI6IlNhZmV3YXkifSwiZXhwIjoxNzIxNjQ3MTU5LCJpYXQiOjE3MjE2NDU5NTl9.WDvXguOGn1dvJfi7XWZ9pr7p9Pt74016lvJMhIBvvJ4
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
   /display/grid:
     get:
       tags:
@@ -205,7 +239,7 @@ paths:
         - Sign In
       summary: Sign in new user with api token
       operationId: sign_in
-      description: You can fetch a user token using you merchant token. If the user does not exist a new one will be created.
+      description: You can fetch a user token using your merchant token. If the user does not exist a new one will be created.
       requestBody:
         required: true
         content:
@@ -1884,7 +1918,7 @@ components:
           type: string
 tags:
   - name: Token
-    description: A JSON Web Token.
+    description: An Acess Token is necessary for every request to our api. It is refreshed using the refresh token provided from the Buy Buddy dashboard. You can find you api refresh token at https://dashboard.buybuddy.co/settings/developer.
   - name: Place
     description: Places represent stores, warehouses, or uniquely named locations assigned to a merchant. Fetch all stored places on the Buy Buddy platform.
   - name: Item
