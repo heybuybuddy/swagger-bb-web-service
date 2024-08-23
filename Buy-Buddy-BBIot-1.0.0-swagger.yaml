@@ -130,6 +130,45 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+  /display/session:
+    get:
+      tags:
+        - Session Fetch
+      summary: Get display sessions
+      operationId: displaySessionFetch
+      description: |
+        You can fetch the sessions for all your displays.
+      parameters:
+        - $ref: '#/components/parameters/DisplayIdentifier'
+        - $ref: '#/components/parameters/Identifier'
+        - $ref: '#/components/parameters/PlaceID'
+        - $ref: '#/components/parameters/StartDate'
+        - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/Max'
+        - $ref: '#/components/parameters/Min'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Field'
+      responses:
+        200:
+          description: result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Session'
+                  page_count:
+                      type: integer
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
   /display/grid:
     get:
       tags:
@@ -148,9 +187,11 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProductPlacement'
+                type: object
+                properties:
+                 data:
+                  items:
+                    $ref: '#/components/schemas/ProductPlacement'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -177,9 +218,11 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PlaceImage'
+                type: object
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/PlaceImage'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -953,6 +996,19 @@ components:
         Sort order:
             * `asc` - Ascending, from A to Z
             * `desc` - Descending, from Z to A
+    Field:
+      in: query
+      name: field
+      schema:
+        type: string
+        enum: 
+          - session_id
+          - session_duration
+          - inserted_at
+          - identifier
+          - display_identifier
+          - display_type
+          
     AggregationFunction:
       in: query
       name: aggregation_function
@@ -997,7 +1053,10 @@ components:
       name: identifier
       description: Specify the barcode of tags to fetch.
       schema:
-        type: string
+        type: array
+        items:
+          type: string
+      required: false
     StateID:
       in: query
       name: state
@@ -1039,6 +1098,20 @@ components:
         type: array
         items:
           type: string
+      required: false
+    Max:
+      in: query
+      name: max
+      description: Specify the maximum duration of the session.
+      schema:
+        type: integer
+      required: false
+    Min:
+      in: query
+      name: min
+      description: Specify the minimum duration of the session.
+      schema:
+        type: integer
       required: false
     PlaceID:
       in: query
@@ -1425,6 +1498,29 @@ components:
                 type: boolean
               item_count:
                 type: integer
+    Session:
+      type: object
+      properties:
+        place_id:
+          type: integer
+        place_name:
+          type: string
+        session_id:
+          type: integer
+        session_duration:
+          type: integer
+        inserted_at:
+          type: string
+        device_id:
+          type: integer
+        identifier:
+          type: string
+        display_id:
+          type: integer
+        display_identifier:
+           type: string
+        display_type:
+           type: string
     PlaceImage:
       type: object
       properties:
@@ -1919,6 +2015,8 @@ components:
 tags:
   - name: Token
     description: An Acess Token is necessary for every request to our api. It is refreshed using the refresh token provided from the Buy Buddy dashboard. You can find you api refresh token at https://dashboard.buybuddy.co/settings/developer.
+  - name: Session Fetch
+    description: Fetch the sessions for all your displays.
   - name: Grid Fetch
     description: Fetch the grids for all your displays.
   - name: Image Fetch
